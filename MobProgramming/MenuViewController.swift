@@ -28,7 +28,8 @@ class MenuViewController: UIViewController {
     let instructionLabel: UILabel = {
         let label = UILabel()
         label.text = "Read and acknowledge the rules."
-        label.font = UIFont.systemFont(ofSize: 17)
+        //label.font = UIFont.systemFont(ofSize: 17)
+        label.font = UIFont(name: "Anton", size: 20)
         label.textAlignment = .center
         label.textColor = .white
         return label
@@ -52,7 +53,7 @@ class MenuViewController: UIViewController {
         button.setTitleColor(UIColor.rgb(red: 48, green: 48, blue: 48, alpha: 1), for: .normal)
         button.layer.cornerRadius = 5
         button.titleLabel?.font = UIFont(name: "Anton", size: 50)
-        //button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
+        button.addTarget(self, action: #selector(membersTapped), for: .touchUpInside)
         return button
     }()
     
@@ -63,7 +64,7 @@ class MenuViewController: UIViewController {
         button.setTitleColor(UIColor.rgb(red: 48, green: 48, blue: 48, alpha: 1), for: .normal)
         button.layer.cornerRadius = 5
         button.titleLabel?.font = UIFont(name: "Anton", size: 50)
-        //button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
+        button.addTarget(self, action: #selector(timersTapped), for: .touchUpInside)
         return button
     }()
     
@@ -74,7 +75,7 @@ class MenuViewController: UIViewController {
         button.setTitleColor(UIColor.rgb(red: 48, green: 48, blue: 48, alpha: 1), for: .normal)
         button.layer.cornerRadius = 5
         button.titleLabel?.font = UIFont(name: "Anton", size: 50)
-        //button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
+        button.addTarget(self, action: #selector(guidelinesTapped), for: .touchUpInside)
         return button
     }()
     
@@ -93,22 +94,15 @@ class MenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
+        self.view.backgroundColor = UIColor(patternImage: (UIImage(named: "dark-honeycomb.png")!))
         let screenHeight = UIScreen.main.bounds.size.height
         let fifthOfScreenHeight = screenHeight / 5
         view.addSubview(titleLabel)
-        
-        
-        
-        
 
-        
-        
-        
-        
         titleLabel.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: fifthOfScreenHeight)
-        if(screenHeight < 569) {
-            instructionLabel.font = UIFont.systemFont(ofSize: 13)
-        }
+//        if(screenHeight < 569) {
+//            instructionLabel.font = UIFont(name: "Anton", size: 17)
+//        }
         view.addSubview(instructionLabel)
         instructionLabel.anchor(top: titleLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
         
@@ -161,6 +155,7 @@ class MenuViewController: UIViewController {
 //        if(screenHeight < 569) {
 //            stackViewHeight = 296
 //        }
+        stackViewButtonHeight = CGFloat((stackViewHeight - 40) / 5)
         stackView.anchor(top: instructionLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewHeight)
     }
     
@@ -170,17 +165,17 @@ class MenuViewController: UIViewController {
     }
     
     @objc func membersTapped() {
-        let vc = self.storyboard?.instantiateViewController(identifier: "RulesViewController") as! RulesViewController
+        let vc = self.storyboard?.instantiateViewController(identifier: "MembersViewController") as! MembersViewController
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
     @objc func timersTapped() {
-        let vc = self.storyboard?.instantiateViewController(identifier: "RulesViewController") as! RulesViewController
+        let vc = self.storyboard?.instantiateViewController(identifier: "TimersViewController") as! TimersViewController
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func guidelinesTapped() {
-        let vc = self.storyboard?.instantiateViewController(identifier: "RulesViewController") as! RulesViewController
+        let vc = self.storyboard?.instantiateViewController(identifier: "GuidelinesViewController") as! GuidelinesViewController
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

@@ -18,6 +18,10 @@
 		D970A4162408B79800E272F2 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D970A4152408B79800E272F2 /* Globals.swift */; };
 		D970A4182408BE2100E272F2 /* RulesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D970A4172408BE2100E272F2 /* RulesViewController.swift */; };
 		D970A41A2408FB5400E272F2 /* Anton.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D970A4192408FB5400E272F2 /* Anton.ttf */; };
+		D970A41C2410CE2200E272F2 /* MembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D970A41B2410CE2200E272F2 /* MembersViewController.swift */; };
+		D970A41E2411C5D700E272F2 /* MemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D970A41D2411C5D700E272F2 /* MemberCell.swift */; };
+		D970A42024121C9800E272F2 /* GuidelinesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D970A41F24121C9800E272F2 /* GuidelinesViewController.swift */; };
+		D970A42224121D0C00E272F2 /* TimersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D970A42124121D0C00E272F2 /* TimersViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +38,10 @@
 		D970A4152408B79800E272F2 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		D970A4172408BE2100E272F2 /* RulesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesViewController.swift; sourceTree = "<group>"; };
 		D970A4192408FB5400E272F2 /* Anton.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Anton.ttf; sourceTree = "<group>"; };
+		D970A41B2410CE2200E272F2 /* MembersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersViewController.swift; sourceTree = "<group>"; };
+		D970A41D2411C5D700E272F2 /* MemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCell.swift; sourceTree = "<group>"; };
+		D970A41F24121C9800E272F2 /* GuidelinesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidelinesViewController.swift; sourceTree = "<group>"; };
+		D970A42124121D0C00E272F2 /* TimersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimersViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,8 +77,12 @@
 				D95DFFE324088EA800B16079 /* AppDelegate.swift */,
 				D95DFFE524088EA800B16079 /* SceneDelegate.swift */,
 				D95DFFE724088EA800B16079 /* MenuViewController.swift */,
+				D970A42124121D0C00E272F2 /* TimersViewController.swift */,
 				D970A4172408BE2100E272F2 /* RulesViewController.swift */,
 				D95DFFE924088EA800B16079 /* Main.storyboard */,
+				D970A41F24121C9800E272F2 /* GuidelinesViewController.swift */,
+				D970A41B2410CE2200E272F2 /* MembersViewController.swift */,
+				D970A41D2411C5D700E272F2 /* MemberCell.swift */,
 				D95DFFFD2408B4E900B16079 /* SupportingFiles */,
 				D95DFFF124088EAB00B16079 /* Info.plist */,
 				D970A4192408FB5400E272F2 /* Anton.ttf */,
@@ -163,11 +175,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D970A42024121C9800E272F2 /* GuidelinesViewController.swift in Sources */,
 				D95DFFE824088EA800B16079 /* MenuViewController.swift in Sources */,
 				D95DFFE424088EA800B16079 /* AppDelegate.swift in Sources */,
 				D95DFFE624088EA800B16079 /* SceneDelegate.swift in Sources */,
+				D970A41E2411C5D700E272F2 /* MemberCell.swift in Sources */,
+				D970A41C2410CE2200E272F2 /* MembersViewController.swift in Sources */,
 				D970A4162408B79800E272F2 /* Globals.swift in Sources */,
 				D970A4182408BE2100E272F2 /* RulesViewController.swift in Sources */,
+				D970A42224121D0C00E272F2 /* TimersViewController.swift in Sources */,
 				D95DFFF82408905200B16079 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

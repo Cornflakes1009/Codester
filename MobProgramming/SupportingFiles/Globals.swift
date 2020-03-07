@@ -6,13 +6,16 @@
 //  Copyright © 2020 HaroldDavidson. All rights reserved.
 //
 
-import Foundation
-var members = [String]()
-var memberIndex = 0
-var timerInterval = 0
-var breakTimer = 0
-var guidelines = ""
-var rulesClicked = false
-var membersSet = false
-var timersSet = false
-var guidelinesSet = false
+// These are variables that are passed around multiple views
+
+import UIKit
+var members                         =   [String]()
+var memberIndex                     =   0
+var breakInterval                   =   0
+var breakTimer                      =   0
+var guidelines                      =   ""
+var rulesClicked                    =   false
+var membersSet                      =   false
+var timersSet                       =   false
+var guidelinesSet                   =   false
+var stackViewButtonHeight: CGFloat  =   0
