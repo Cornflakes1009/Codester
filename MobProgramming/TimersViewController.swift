@@ -8,40 +8,41 @@
 
 import UIKit
 
-class TimersViewController: UIViewController {
+class TimersViewController: UIViewController, UITextFieldDelegate {
     let times = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     
     // Minutes per round
-    let minutesPerRoundLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Minutes per round."
-        //label.font = UIFont.systemFont(ofSize: 17)
-        label.font = UIFont(name: "Anton", size: 25)
-        label.textAlignment = .center
-        label.textColor = .white
-        return label
-    }()
+    //    let minutesPerRoundLabel: UILabel = {
+    //        let label = UILabel()
+    //        label.text = "Minutes per round."
+    //        //label.font = UIFont.systemFont(ofSize: 17)
+    //        label.font = UIFont(name: "Anton", size: 25)
+    //        label.textAlignment = .center
+    //        label.textColor = .white
+    //        return label
+    //    }()
     
-    let minsutesPerRoundTextField: UITextField = {
+    let minutesPerRoundTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Select round length"
         tf.backgroundColor = UIColor.rgb(red: 232, green: 232, blue: 232, alpha: 1)
         tf.layer.cornerRadius = 5
         tf.textAlignment = .center
         tf.font = UIFont(name: "Anton", size: 20)
+        tf.addDoneButtonOnKeyboard()
         return tf
     }()
     
     // Time per break
-    let timePerBreakLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Minutes per break."
-        //label.font = UIFont.systemFont(ofSize: 17)
-        label.font = UIFont(name: "Anton", size: 25)
-        label.textAlignment = .center
-        label.textColor = .white
-        return label
-    }()
+    //    let timePerBreakLabel: UILabel = {
+    //        let label = UILabel()
+    //        label.text = "Minutes per break."
+    //        //label.font = UIFont.systemFont(ofSize: 17)
+    //        label.font = UIFont(name: "Anton", size: 25)
+    //        label.textAlignment = .center
+    //        label.textColor = .white
+    //        return label
+    //    }()
     
     let minutesPerBreakTextField: UITextField = {
         let tf = UITextField()
@@ -50,18 +51,19 @@ class TimersViewController: UIViewController {
         tf.layer.cornerRadius = 5
         tf.textAlignment = .center
         tf.font = UIFont(name: "Anton", size: 20)
+        tf.addDoneButtonOnKeyboard()
         return tf
     }()
     
     // Break frequency
-    let roundsPerBreakLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Turns before break."
-        label.font = UIFont(name: "Anton", size: 25)
-        label.textAlignment = .center
-        label.textColor = .white
-        return label
-    }()
+    //    let roundsPerBreakLabel: UILabel = {
+    //        let label = UILabel()
+    //        label.text = "Turns before break."
+    //        label.font = UIFont(name: "Anton", size: 25)
+    //        label.textAlignment = .center
+    //        label.textColor = .white
+    //        return label
+    //    }()
     
     let breakFrequencyTextField: UITextField = {
         let tf = UITextField()
@@ -70,6 +72,7 @@ class TimersViewController: UIViewController {
         tf.layer.cornerRadius = 5
         tf.textAlignment = .center
         tf.font = UIFont(name: "Anton", size: 20)
+        tf.addDoneButtonOnKeyboard()
         return tf
     }()
     
@@ -97,35 +100,51 @@ class TimersViewController: UIViewController {
         }
         view.addSubview(submitTimersButton)
         submitTimersButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: stackViewButtonHeight)
+        
+    } // End of ViewDidLoad
+    
+//    func addKeyboardResponders() {
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillHideNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+//    }
+//    deinit {
+//        // Stop listening for keyboard show/hide events
+//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+//    }
+//
+//    @objc func keyboardWillChange(notification: Notification) {
+//        view.frame.origin.y = -300
+//    }
+    
+    func setupStackView() {
+        let stackView = UIStackView(arrangedSubviews: [minutesPerRoundTextField, minutesPerBreakTextField, breakFrequencyTextField])
+        stackView.distribution = .fillEqually
+        stackView.axis = .vertical
+        stackView.spacing = 10
+        
+        view.addSubview(stackView)
+        
+        
+        //let screenHeight = UIScreen.main.bounds.size.height
+        // Calculating screen height based on the initial height of the first buttons times the number of buttons and adding 20 (10 for each space)
+        let stackViewHeight = (stackViewButtonHeight * 3) + 20
+        print(stackViewHeight)
+        //        if(screenHeight < 569) {
+        //            stackViewHeight = 296
+        //        }
+        
+        stackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewHeight)
     }
-
-        func setupStackView() {
-            let stackView = UIStackView(arrangedSubviews: [minsutesPerRoundTextField, minutesPerBreakTextField, breakFrequencyTextField])
-            stackView.distribution = .fillEqually
-            stackView.axis = .vertical
-            stackView.spacing = 10
-            
-            view.addSubview(stackView)
-            
-            
-            //let screenHeight = UIScreen.main.bounds.size.height
-            // Calculating screen height based on the initial height of the first buttons times the number of buttons and adding 20 (10 for each space)
-            let stackViewHeight = (stackViewButtonHeight * 3) + 20
-            print(stackViewHeight)
-    //        if(screenHeight < 569) {
-    //            stackViewHeight = 296
-    //        }
-
-            stackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewHeight)
-        }
     
     @objc func submitTimers() {
-        timersSet = true
-        submitTimersButton.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
-        // TODO: get min per round, break length, and break frequency
-        
-        
-        self.navigationController?.popViewController(animated: true)
-        self.dismiss(animated: true, completion: nil)
+        if (minutesPerBreakTextField.text != "" && minutesPerBreakTextField.text != "" && breakFrequencyTextField.text != "") {
+            timersSet = true
+            submitTimersButton.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
+            self.navigationController?.popViewController(animated: true)
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 }
