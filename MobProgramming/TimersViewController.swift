@@ -11,17 +11,6 @@ import UIKit
 class TimersViewController: UIViewController, UITextFieldDelegate {
     let times = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     
-    // Minutes per round
-    //    let minutesPerRoundLabel: UILabel = {
-    //        let label = UILabel()
-    //        label.text = "Minutes per round."
-    //        //label.font = UIFont.systemFont(ofSize: 17)
-    //        label.font = UIFont(name: "Anton", size: 25)
-    //        label.textAlignment = .center
-    //        label.textColor = .white
-    //        return label
-    //    }()
-    
     let minutesPerRoundTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Select round length"
@@ -33,17 +22,6 @@ class TimersViewController: UIViewController, UITextFieldDelegate {
         return tf
     }()
     
-    // Time per break
-    //    let timePerBreakLabel: UILabel = {
-    //        let label = UILabel()
-    //        label.text = "Minutes per break."
-    //        //label.font = UIFont.systemFont(ofSize: 17)
-    //        label.font = UIFont(name: "Anton", size: 25)
-    //        label.textAlignment = .center
-    //        label.textColor = .white
-    //        return label
-    //    }()
-    
     let minutesPerBreakTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Select break length"
@@ -54,16 +32,6 @@ class TimersViewController: UIViewController, UITextFieldDelegate {
         tf.addDoneButtonOnKeyboard()
         return tf
     }()
-    
-    // Break frequency
-    //    let roundsPerBreakLabel: UILabel = {
-    //        let label = UILabel()
-    //        label.text = "Turns before break."
-    //        label.font = UIFont(name: "Anton", size: 25)
-    //        label.textAlignment = .center
-    //        label.textColor = .white
-    //        return label
-    //    }()
     
     let breakFrequencyTextField: UITextField = {
         let tf = UITextField()
@@ -103,22 +71,6 @@ class TimersViewController: UIViewController, UITextFieldDelegate {
         
     } // End of ViewDidLoad
     
-//    func addKeyboardResponders() {
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillHideNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-//    }
-//    deinit {
-//        // Stop listening for keyboard show/hide events
-//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-//    }
-//
-//    @objc func keyboardWillChange(notification: Notification) {
-//        view.frame.origin.y = -300
-//    }
-    
     func setupStackView() {
         let stackView = UIStackView(arrangedSubviews: [minutesPerRoundTextField, minutesPerBreakTextField, breakFrequencyTextField])
         stackView.distribution = .fillEqually
@@ -131,10 +83,6 @@ class TimersViewController: UIViewController, UITextFieldDelegate {
         //let screenHeight = UIScreen.main.bounds.size.height
         // Calculating screen height based on the initial height of the first buttons times the number of buttons and adding 20 (10 for each space)
         let stackViewHeight = (stackViewButtonHeight * 3) + 20
-        print(stackViewHeight)
-        //        if(screenHeight < 569) {
-        //            stackViewHeight = 296
-        //        }
         
         stackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewHeight)
     }

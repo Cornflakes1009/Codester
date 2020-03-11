@@ -22,7 +22,6 @@
 		D970A41E2411C5D700E272F2 /* MemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D970A41D2411C5D700E272F2 /* MemberCell.swift */; };
 		D970A42024121C9800E272F2 /* GuidelinesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D970A41F24121C9800E272F2 /* GuidelinesViewController.swift */; };
 		D970A42224121D0C00E272F2 /* TimersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D970A42124121D0C00E272F2 /* TimersViewController.swift */; };
-		D970A4242414825000E272F2 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D970A4232414825000E272F2 /* UITextField+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,7 +42,6 @@
 		D970A41D2411C5D700E272F2 /* MemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCell.swift; sourceTree = "<group>"; };
 		D970A41F24121C9800E272F2 /* GuidelinesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidelinesViewController.swift; sourceTree = "<group>"; };
 		D970A42124121D0C00E272F2 /* TimersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimersViewController.swift; sourceTree = "<group>"; };
-		D970A4232414825000E272F2 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +93,6 @@
 		D95DFFFD2408B4E900B16079 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				D970A4232414825000E272F2 /* UITextField+Extensions.swift */,
 				D95DFFF72408905200B16079 /* Extensions.swift */,
 				D95DFFEC24088EAB00B16079 /* Assets.xcassets */,
 				D95DFFEE24088EAB00B16079 /* LaunchScreen.storyboard */,
@@ -178,7 +175,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D970A4242414825000E272F2 /* UITextField+Extensions.swift in Sources */,
 				D970A42024121C9800E272F2 /* GuidelinesViewController.swift in Sources */,
 				D95DFFE824088EA800B16079 /* MenuViewController.swift in Sources */,
 				D95DFFE424088EA800B16079 /* AppDelegate.swift in Sources */,

@@ -22,24 +22,24 @@ class MembersViewController: UIViewController {
     
     let addTeamTextField: UITextField = {
         let tf = UITextField()
-        //tf.placeholder = "Enter team members"
         tf.attributedPlaceholder = NSAttributedString(string: "Enter team members", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         tf.textColor = .white
         tf.backgroundColor = UIColor.rgb(red: 112, green: 112, blue: 112, alpha: 1)
         tf.layer.cornerRadius = 5
+        tf.addDoneButtonOnKeyboard()
         return tf
     }()
     
     let memberSubmitButton: UIButton = {
-         let button = UIButton(type: .system)
-         button.setTitle("Add Member", for: .normal)
-         button.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
-         button.setTitleColor(UIColor.rgb(red: 48, green: 48, blue: 48, alpha: 1), for: .normal)
-         button.layer.cornerRadius = 5
-         button.titleLabel?.font = UIFont(name: "Anton", size: 50)
-         button.addTarget(self, action: #selector(addMembersTapped), for: .touchUpInside)
-         return button
-     }()
+        let button = UIButton(type: .system)
+        button.setTitle("Add Member", for: .normal)
+        button.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
+        button.setTitleColor(UIColor.rgb(red: 48, green: 48, blue: 48, alpha: 1), for: .normal)
+        button.layer.cornerRadius = 5
+        button.titleLabel?.font = UIFont(name: "Anton", size: 50)
+        button.addTarget(self, action: #selector(addMembersTapped), for: .touchUpInside)
+        return button
+    }()
     
     var tableView = UITableView()
 

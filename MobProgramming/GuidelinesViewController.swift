@@ -77,6 +77,7 @@ class GuidelinesViewController: UIViewController {
         
         if notification.name == UIResponder.keyboardWillShowNotification || notification.name == UIResponder.keyboardWillChangeFrameNotification {
             view.frame.origin.y = -keyboardRect.height
+            // Adding a magic number based on adding 20 padding to the top and bottom of the submit button
             let textViewHeight = screenHeight - keyboardRect.height - stackViewButtonHeight - 40 - topbarHeight
             guidelinesTextView.removeAllConstraints()
             guidelinesTextView.anchor(top: nil, left: view.leftAnchor, bottom: saveGuidelinesButton.topAnchor, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: textViewHeight)
