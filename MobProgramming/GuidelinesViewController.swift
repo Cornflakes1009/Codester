@@ -36,11 +36,10 @@ class GuidelinesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(patternImage: (UIImage(named: "dark-honeycomb.png")!))
+        self.view.backgroundColor = UIColor(patternImage:  backgroundImage)
         navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         
-//        if(screenHeight < 569) { }
         textViewHeight = CGFloat(screenHeight * 0.7)
         
         if(guidelines != "") {
@@ -48,7 +47,7 @@ class GuidelinesViewController: UIViewController {
         }
         
         view.addSubview(guidelinesTextView)
-        setupTextView()
+        setupTextViewConstraints()
         
         view.addSubview(saveGuidelinesButton)
         saveGuidelinesButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: stackViewButtonHeight)
@@ -85,12 +84,11 @@ class GuidelinesViewController: UIViewController {
         } else {
             view.frame.origin.y = 0
             guidelinesTextView.removeAllConstraints()
-            setupTextView()
+            setupTextViewConstraints()
         }
-        
     }
     
-    func setupTextView() {
+    func setupTextViewConstraints() {
         guidelinesTextView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: textViewHeight)
     }
     

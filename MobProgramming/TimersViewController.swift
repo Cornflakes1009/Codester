@@ -11,37 +11,36 @@ import UIKit
 class TimersViewController: UIViewController, UITextFieldDelegate {
     let times = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     
-    let minutesPerRoundTextField: UITextField = {
-        let tf = UITextField()
-        tf.placeholder = "Select round length"
-        tf.backgroundColor = UIColor.rgb(red: 232, green: 232, blue: 232, alpha: 1)
-        tf.layer.cornerRadius = 5
-        tf.textAlignment = .center
-        tf.font = UIFont(name: "Anton", size: 20)
-        tf.addDoneButtonOnKeyboard()
-        return tf
+    let minsPerRoundLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Select Minutes Per Round"
+        label.font = UIFont(name: "Anton", size: 20)
+        label.textAlignment = .center
+        label.textColor = .white
+        return label
     }()
     
-    let minutesPerBreakTextField: UITextField = {
-        let tf = UITextField()
-        tf.placeholder = "Select break length"
-        tf.backgroundColor = UIColor.rgb(red: 232, green: 232, blue: 232, alpha: 1)
-        tf.layer.cornerRadius = 5
-        tf.textAlignment = .center
-        tf.font = UIFont(name: "Anton", size: 20)
-        tf.addDoneButtonOnKeyboard()
-        return tf
+    let minutesPerRoundPickerView: UIPickerView = {
+        let picker = UIPickerView()
+        picker.backgroundColor = UIColor.rgb(red: 160, green: 160, blue: 160, alpha: 0.5)
+        picker.layer.cornerRadius = 5
+        return picker
     }()
     
-    let breakFrequencyTextField: UITextField = {
-        let tf = UITextField()
-        tf.placeholder = "Select break frequency"
-        tf.backgroundColor = UIColor.rgb(red: 232, green: 232, blue: 232, alpha: 1)
-        tf.layer.cornerRadius = 5
-        tf.textAlignment = .center
-        tf.font = UIFont(name: "Anton", size: 20)
-        tf.addDoneButtonOnKeyboard()
-        return tf
+    let minsPerBreakLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Select Minutes Per Break"
+        label.font = UIFont(name: "Anton", size: 20)
+        label.textAlignment = .center
+        label.textColor = .white
+        return label
+    }()
+    
+    let minutesPerBreakPickerView: UIPickerView = {
+        let picker = UIPickerView()
+        picker.backgroundColor = UIColor.rgb(red: 160, green: 160, blue: 160, alpha: 0.5)
+        picker.layer.cornerRadius = 5
+        return picker
     }()
     
     let submitTimersButton: UIButton = {
@@ -57,42 +56,69 @@ class TimersViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(patternImage: (UIImage(named: "dark-honeycomb.png")!))
+        setUpViews()
+    }
+    
+    // MARK: Setting Up The Views
+    func setUpViews() {
+        self.view.backgroundColor = UIColor(patternImage:  backgroundImage)
         navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         
-        setupStackView()
+        view.addSubview(minsPerRoundLabel)
+        minsPerRoundLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
+        
+        let screenHeight = UIScreen.main.bounds.size.height
+        let pickerViewHeight = screenHeight * 0.20
+        view.addSubview(minutesPerRoundPickerView)
+        minutesPerRoundPickerView.anchor(top: minsPerRoundLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: pickerViewHeight)
+        minutesPerRoundPickerView.delegate = self
+        
+        view.addSubview(minsPerBreakLabel)
+        minsPerBreakLabel.anchor(top: minutesPerRoundPickerView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
+        
+        view.addSubview(minutesPerBreakPickerView)
+        minutesPerBreakPickerView.anchor(top: minsPerBreakLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: pickerViewHeight)
+        minutesPerBreakPickerView.delegate = self
         
         if(timersSet) {
             submitTimersButton.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
         }
         view.addSubview(submitTimersButton)
         submitTimersButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: stackViewButtonHeight)
-        
-    } // End of ViewDidLoad
-    
-    func setupStackView() {
-        let stackView = UIStackView(arrangedSubviews: [minutesPerRoundTextField, minutesPerBreakTextField, breakFrequencyTextField])
-        stackView.distribution = .fillEqually
-        stackView.axis = .vertical
-        stackView.spacing = 10
-        
-        view.addSubview(stackView)
-        
-        
-        //let screenHeight = UIScreen.main.bounds.size.height
-        // Calculating screen height based on the initial height of the first buttons times the number of buttons and adding 20 (10 for each space)
-        let stackViewHeight = (stackViewButtonHeight * 3) + 20
-        
-        stackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewHeight)
     }
     
+    // MARK: Button Functions
     @objc func submitTimers() {
-        if (minutesPerBreakTextField.text != "" && minutesPerBreakTextField.text != "" && breakFrequencyTextField.text != "") {
-            timersSet = true
-            submitTimersButton.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
-            self.navigationController?.popViewController(animated: true)
-            self.dismiss(animated: true, completion: nil)
+        timersSet = true
+        submitTimersButton.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
+        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension TimersViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return times.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return String(times[row])
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == minutesPerRoundPickerView {
+            roundLength = times[row]
+        } else {
+            breakLength = times[row]
         }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        return NSAttributedString(string: String(times[row]), attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
     }
 }

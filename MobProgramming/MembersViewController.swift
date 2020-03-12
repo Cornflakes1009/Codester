@@ -10,16 +10,6 @@ import UIKit
 
 class MembersViewController: UIViewController {
     
-//    let instructionLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "Add Members"
-//        label.font = UIFont(name: "Anton", size: 50)
-//
-//        label.textAlignment = .center
-//        label.textColor = .white
-//        return label
-//    }()
-    
     let addTeamTextField: UITextField = {
         let tf = UITextField()
         tf.attributedPlaceholder = NSAttributedString(string: "Enter team members", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
@@ -45,22 +35,19 @@ class MembersViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(patternImage: (UIImage(named: "dark-honeycomb.png")!))
+        self.view.backgroundColor = UIColor(patternImage:  backgroundImage)
         navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         
         let screenHeight = UIScreen.main.bounds.size.height
         let tableViewHeight = screenHeight * 0.5
         
-//        view.addSubview(instructionLabel)
-//        instructionLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewButtonHeight)
         view.addSubview(addTeamTextField)
         addTeamTextField.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewButtonHeight)
         view.addSubview(memberSubmitButton)
         memberSubmitButton.anchor(top: addTeamTextField.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewButtonHeight)
         view.addSubview(tableView)
         tableView.anchor(top: memberSubmitButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: tableViewHeight)
-
 
         configureTableView()
     } // End of ViewDidLoad

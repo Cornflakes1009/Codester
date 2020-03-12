@@ -9,10 +9,11 @@
 // These are variables that are passed around multiple views
 
 import UIKit
+let backgroundImage                 =   UIImage(named: "dark-honeycomb.png")!
 var members                         =   [String]()
 var memberIndex                     =   0
-var breakInterval                   =   0
-var breakTimer                      =   0
+var roundLength                     =   0
+var breakLength                     =   0
 var guidelines                      =   ""
 var rulesClicked                    =   false
 var membersSet                      =   false

@@ -12,7 +12,6 @@ class MemberCell: UITableViewCell {
 
     var memberLabel = UILabel()
     
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubview(memberLabel)

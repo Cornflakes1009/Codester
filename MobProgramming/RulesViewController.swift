@@ -51,6 +51,11 @@ class RulesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setUpViews()
+    }
+    
+    // MARK: Setting Up The Views
+    func setUpViews() {
         self.view.backgroundColor = UIColor(patternImage: (UIImage(named: "dark-honeycomb.png")!))
         navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
@@ -70,6 +75,7 @@ class RulesViewController: UIViewController {
         rulesConfirmationButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: stackViewButtonHeight)
     }
     
+    // MARK: Button Functions
     @objc func completeRules() {
         rulesClicked = true
         rulesConfirmationButton.isEnabled = false

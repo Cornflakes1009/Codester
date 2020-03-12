@@ -87,26 +87,13 @@ class MenuViewController: UIViewController {
         button.layer.cornerRadius = 5
         button.titleLabel?.font = UIFont(name: "Anton", size: 50)
         button.isEnabled = false
-        //button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
+        //button.addTarget(self, action: #selector(beginButtonTapped), for: .touchUpInside)
         return button
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
-        self.view.backgroundColor = UIColor(patternImage: (UIImage(named: "dark-honeycomb.png")!))
-        let screenHeight = UIScreen.main.bounds.size.height
-        let fifthOfScreenHeight = screenHeight / 5
-        view.addSubview(titleLabel)
-
-        titleLabel.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: fifthOfScreenHeight)
-//        if(screenHeight < 569) {
-//            instructionLabel.font = UIFont(name: "Anton", size: 17)
-//        }
-        view.addSubview(instructionLabel)
-        instructionLabel.anchor(top: titleLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
-        
-        setupStackView()
+        setUpViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -114,24 +101,26 @@ class MenuViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
         
         if(rulesClicked == false) {
-            rulesButton.backgroundColor = .green
-            view.setNeedsDisplay()
+            setGreen(button: rulesButton)
         } else if(membersSet == false) {
-            rulesButton.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
+            setGray(button: rulesButton)
             instructionLabel.text = "Enter group members."
-            membersButton.backgroundColor = .green
+            setGreen(button: membersButton)
         } else if(timersSet == false) {
-            membersButton.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
+            setGray(button: membersButton)
             instructionLabel.text = "Set the timers."
-            timersButton.backgroundColor = .green
+            setGreen(button: timersButton)
         }else if(guidelinesSet == false) {
             timersButton.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
             instructionLabel.text = "Enter the project guidelines."
             guidelinesButton.backgroundColor = .green
         } else {
-            guidelinesButton.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
+            setGray(button: rulesButton)
+            setGray(button: membersButton)
+            setGray(button: timersButton)
+            setGray(button: guidelinesButton)
             instructionLabel.text = "Press begin and enjoy mobbing."
-            beginButton.backgroundColor = .green
+            setGreen(button: beginButton)
             beginButton.isEnabled = true
         }
     }
@@ -140,7 +129,33 @@ class MenuViewController: UIViewController {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
+    
+    // MARK: Setting Up the Views
+    func setUpViews() {
+        view.backgroundColor = .black
+        self.view.backgroundColor = UIColor(patternImage:  backgroundImage)
+        let screenHeight = UIScreen.main.bounds.size.height
+        let fifthOfScreenHeight = screenHeight / 5
+        view.addSubview(titleLabel)
 
+        titleLabel.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: fifthOfScreenHeight)
+        
+        view.addSubview(instructionLabel)
+        instructionLabel.anchor(top: titleLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
+        
+        setupStackView()
+    }
+    
+    // MARK: Setting Button Colors
+    func setGreen(button: UIButton) {
+        button.backgroundColor = .green
+    }
+    
+    func setGray(button: UIButton) {
+        button.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
+    }
+
+    // MARK: Setting Up the StackView
     func setupStackView() {
         let stackView = UIStackView(arrangedSubviews: [rulesButton, membersButton, timersButton, guidelinesButton, beginButton])
         stackView.distribution = .fillEqually
@@ -149,16 +164,13 @@ class MenuViewController: UIViewController {
         
         view.addSubview(stackView)
         
-        
         let screenHeight = UIScreen.main.bounds.size.height
         let stackViewHeight = CGFloat(screenHeight / 2)
-//        if(screenHeight < 569) {
-//            stackViewHeight = 296
-//        }
         stackViewButtonHeight = CGFloat((stackViewHeight - 40) / 5)
         stackView.anchor(top: instructionLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewHeight)
     }
     
+    // MARK: Button Functions
     @objc func rulesTapped() {
         let vc = self.storyboard?.instantiateViewController(identifier: "RulesViewController") as! RulesViewController
         self.navigationController?.pushViewController(vc, animated: true)
@@ -184,4 +196,3 @@ class MenuViewController: UIViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
-
