@@ -12,7 +12,7 @@ class MembersViewController: UIViewController {
     
     let addTeamTextField: UITextField = {
         let tf = UITextField()
-        tf.attributedPlaceholder = NSAttributedString(string: "Enter team members", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        tf.attributedPlaceholder = NSAttributedString(string: "Add at least 3 team members", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         tf.textColor = .white
         tf.backgroundColor = UIColor.rgb(red: 112, green: 112, blue: 112, alpha: 1)
         tf.layer.cornerRadius = 5
@@ -23,11 +23,22 @@ class MembersViewController: UIViewController {
     let memberSubmitButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Add Member", for: .normal)
-        button.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
+        button.backgroundColor = .green
         button.setTitleColor(UIColor.rgb(red: 48, green: 48, blue: 48, alpha: 1), for: .normal)
         button.layer.cornerRadius = 5
-        button.titleLabel?.font = UIFont(name: "Anton", size: 50)
+        button.titleLabel?.font = buttonFont
         button.addTarget(self, action: #selector(addMembersTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    let doneButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Done", for: .normal)
+        button.backgroundColor = grayColor
+        button.setTitleColor(UIColor.rgb(red: 48, green: 48, blue: 48, alpha: 1), for: .normal)
+        button.layer.cornerRadius = 5
+        button.titleLabel?.font = buttonFont
+        button.addTarget(self, action: #selector(doneTapped), for: .touchUpInside)
         return button
     }()
     
@@ -35,6 +46,11 @@ class MembersViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setUpView()
+    }
+    
+    func setUpView() {
         self.view.backgroundColor = UIColor(patternImage:  backgroundImage)
         navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
@@ -48,15 +64,27 @@ class MembersViewController: UIViewController {
         memberSubmitButton.anchor(top: addTeamTextField.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewButtonHeight)
         view.addSubview(tableView)
         tableView.anchor(top: memberSubmitButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: tableViewHeight)
-
+        tableView.layer.cornerRadius = 5
+        
         configureTableView()
-    } // End of ViewDidLoad
+        
+        view.addSubview(doneButton)
+        doneButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: stackViewButtonHeight)
+    }
     
     func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 50
         tableView.register(MemberCell.self, forCellReuseIdentifier: "MemberCell")
+    }
+    
+    func checkNumOfMembers() {
+        if members.count > 2 {
+            memberSubmitButton.backgroundColor = grayColor
+        } else {
+            memberSubmitButton.backgroundColor = .green
+        }
     }
     
     @objc func addMembersTapped() {
@@ -69,6 +97,13 @@ class MembersViewController: UIViewController {
                 tableView.reloadData()
             }
         }
+        checkNumOfMembers()
+    }
+    
+    @objc func doneTapped() {
+        vibrate()
+        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -87,6 +122,7 @@ extension MembersViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCell.EditingStyle.delete {
             members.remove(at: indexPath.row)
+            checkNumOfMembers()
             tableView.reloadData()
         }
     }

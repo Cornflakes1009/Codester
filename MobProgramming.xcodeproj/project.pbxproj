@@ -22,6 +22,8 @@
 		D970A41E2411C5D700E272F2 /* MemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D970A41D2411C5D700E272F2 /* MemberCell.swift */; };
 		D970A42024121C9800E272F2 /* GuidelinesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D970A41F24121C9800E272F2 /* GuidelinesViewController.swift */; };
 		D970A42224121D0C00E272F2 /* TimersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D970A42124121D0C00E272F2 /* TimersViewController.swift */; };
+		D9AD4777241ADBA7000C50D9 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AD4776241ADBA7000C50D9 /* CreditsViewController.swift */; };
+		D9AD4779241ADC06000C50D9 /* MainPlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9AD4778241ADC06000C50D9 /* MainPlayViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 		D970A41D2411C5D700E272F2 /* MemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCell.swift; sourceTree = "<group>"; };
 		D970A41F24121C9800E272F2 /* GuidelinesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidelinesViewController.swift; sourceTree = "<group>"; };
 		D970A42124121D0C00E272F2 /* TimersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimersViewController.swift; sourceTree = "<group>"; };
+		D9AD4776241ADBA7000C50D9 /* CreditsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditsViewController.swift; sourceTree = "<group>"; };
+		D9AD4778241ADC06000C50D9 /* MainPlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPlayViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +84,8 @@
 				D970A42124121D0C00E272F2 /* TimersViewController.swift */,
 				D970A4172408BE2100E272F2 /* RulesViewController.swift */,
 				D95DFFE924088EA800B16079 /* Main.storyboard */,
+				D9AD4778241ADC06000C50D9 /* MainPlayViewController.swift */,
+				D9AD4776241ADBA7000C50D9 /* CreditsViewController.swift */,
 				D970A41F24121C9800E272F2 /* GuidelinesViewController.swift */,
 				D970A41B2410CE2200E272F2 /* MembersViewController.swift */,
 				D970A41D2411C5D700E272F2 /* MemberCell.swift */,
@@ -178,11 +184,13 @@
 				D970A42024121C9800E272F2 /* GuidelinesViewController.swift in Sources */,
 				D95DFFE824088EA800B16079 /* MenuViewController.swift in Sources */,
 				D95DFFE424088EA800B16079 /* AppDelegate.swift in Sources */,
+				D9AD4777241ADBA7000C50D9 /* CreditsViewController.swift in Sources */,
 				D95DFFE624088EA800B16079 /* SceneDelegate.swift in Sources */,
 				D970A41E2411C5D700E272F2 /* MemberCell.swift in Sources */,
 				D970A41C2410CE2200E272F2 /* MembersViewController.swift in Sources */,
 				D970A4162408B79800E272F2 /* Globals.swift in Sources */,
 				D970A4182408BE2100E272F2 /* RulesViewController.swift in Sources */,
+				D9AD4779241ADC06000C50D9 /* MainPlayViewController.swift in Sources */,
 				D970A42224121D0C00E272F2 /* TimersViewController.swift in Sources */,
 				D95DFFF82408905200B16079 /* Extensions.swift in Sources */,
 			);
@@ -329,6 +337,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 464PVQ34ND;
 				INFOPLIST_FILE = MobProgramming/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -346,6 +355,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 464PVQ34ND;
 				INFOPLIST_FILE = MobProgramming/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

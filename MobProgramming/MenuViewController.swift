@@ -28,7 +28,6 @@ class MenuViewController: UIViewController {
     let instructionLabel: UILabel = {
         let label = UILabel()
         label.text = "Read and acknowledge the rules."
-        //label.font = UIFont.systemFont(ofSize: 17)
         label.font = UIFont(name: "Anton", size: 20)
         label.textAlignment = .center
         label.textColor = .white
@@ -38,10 +37,10 @@ class MenuViewController: UIViewController {
     let rulesButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Rules", for: .normal)
-        button.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
-        button.setTitleColor(UIColor.rgb(red: 48, green: 48, blue: 48, alpha: 1), for: .normal)
+        button.backgroundColor = grayColor
+        button.setTitleColor(buttonTitleColor, for: .normal)
         button.layer.cornerRadius = 5
-        button.titleLabel?.font = UIFont(name: "Anton", size: 50)
+        button.titleLabel?.font = buttonFont
         button.addTarget(self, action: #selector(rulesTapped), for: .touchUpInside)
         return button
     }()
@@ -49,10 +48,10 @@ class MenuViewController: UIViewController {
     let membersButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Members", for: .normal)
-        button.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
-        button.setTitleColor(UIColor.rgb(red: 48, green: 48, blue: 48, alpha: 1), for: .normal)
+        button.backgroundColor = grayColor
+        button.setTitleColor(buttonTitleColor, for: .normal)
         button.layer.cornerRadius = 5
-        button.titleLabel?.font = UIFont(name: "Anton", size: 50)
+        button.titleLabel?.font = buttonFont
         button.addTarget(self, action: #selector(membersTapped), for: .touchUpInside)
         return button
     }()
@@ -60,10 +59,10 @@ class MenuViewController: UIViewController {
     let timersButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Timers", for: .normal)
-        button.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
-        button.setTitleColor(UIColor.rgb(red: 48, green: 48, blue: 48, alpha: 1), for: .normal)
+        button.backgroundColor = grayColor
+        button.setTitleColor(buttonTitleColor, for: .normal)
         button.layer.cornerRadius = 5
-        button.titleLabel?.font = UIFont(name: "Anton", size: 50)
+        button.titleLabel?.font = buttonFont
         button.addTarget(self, action: #selector(timersTapped), for: .touchUpInside)
         return button
     }()
@@ -71,10 +70,10 @@ class MenuViewController: UIViewController {
     let guidelinesButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Guidelines", for: .normal)
-        button.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
-        button.setTitleColor(UIColor.rgb(red: 48, green: 48, blue: 48, alpha: 1), for: .normal)
+        button.backgroundColor = grayColor
+        button.setTitleColor(buttonTitleColor, for: .normal)
         button.layer.cornerRadius = 5
-        button.titleLabel?.font = UIFont(name: "Anton", size: 50)
+        button.titleLabel?.font = buttonFont
         button.addTarget(self, action: #selector(guidelinesTapped), for: .touchUpInside)
         return button
     }()
@@ -82,12 +81,32 @@ class MenuViewController: UIViewController {
     let beginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Mob!", for: .normal)
-        button.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
-        button.setTitleColor(UIColor.rgb(red: 48, green: 48, blue: 48, alpha: 1), for: .normal)
+        button.backgroundColor = grayColor
+        button.setTitleColor(buttonTitleColor, for: .normal)
         button.layer.cornerRadius = 5
-        button.titleLabel?.font = UIFont(name: "Anton", size: 50)
-        button.isEnabled = false
-        //button.addTarget(self, action: #selector(beginButtonTapped), for: .touchUpInside)
+        button.titleLabel?.font = buttonFont
+        
+        
+        
+        
+        
+        //button.isEnabled = false
+        
+        
+        
+        
+        
+        
+        button.addTarget(self, action: #selector(beginButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    let creditsButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Credits", for: .normal)
+        button.tintColor = .white
+        button.titleLabel?.font = UIFont(name: "Anton", size: 25)
+        button.addTarget(self, action: #selector(CreditsButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -130,6 +149,18 @@ class MenuViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
+    // Detecting if screen rotates and redrawing stack view
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        if UIDevice.current.orientation.isLandscape {
+            stackView.removeAllConstraints()
+            setupStackView()
+        } else {
+            stackView.removeAllConstraints()
+            setupStackView()
+        }
+    }
+    
     // MARK: Setting Up the Views
     func setUpViews() {
         view.backgroundColor = .black
@@ -144,20 +175,16 @@ class MenuViewController: UIViewController {
         instructionLabel.anchor(top: titleLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
         
         setupStackView()
+        
+        view.addSubview(creditsButton)
+        creditsButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: -10, paddingRight: 0, width: 0, height: 0)
+        creditsButton.center = self.view.center
     }
     
-    // MARK: Setting Button Colors
-    func setGreen(button: UIButton) {
-        button.backgroundColor = .green
-    }
-    
-    func setGray(button: UIButton) {
-        button.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
-    }
-
+    var stackView = UIStackView()
     // MARK: Setting Up the StackView
     func setupStackView() {
-        let stackView = UIStackView(arrangedSubviews: [rulesButton, membersButton, timersButton, guidelinesButton, beginButton])
+        stackView = UIStackView(arrangedSubviews: [rulesButton, membersButton, timersButton, guidelinesButton, beginButton])
         stackView.distribution = .fillEqually
         stackView.axis = .vertical
         stackView.spacing = 10
@@ -174,25 +201,36 @@ class MenuViewController: UIViewController {
     @objc func rulesTapped() {
         let vc = self.storyboard?.instantiateViewController(identifier: "RulesViewController") as! RulesViewController
         self.navigationController?.pushViewController(vc, animated: true)
+        vibrate()
     }
     
     @objc func membersTapped() {
         let vc = self.storyboard?.instantiateViewController(identifier: "MembersViewController") as! MembersViewController
         self.navigationController?.pushViewController(vc, animated: true)
+        vibrate()
     }
 
     @objc func timersTapped() {
         let vc = self.storyboard?.instantiateViewController(identifier: "TimersViewController") as! TimersViewController
         self.navigationController?.pushViewController(vc, animated: true)
+        vibrate()
     }
     
     @objc func guidelinesTapped() {
         let vc = self.storyboard?.instantiateViewController(identifier: "GuidelinesViewController") as! GuidelinesViewController
         self.navigationController?.pushViewController(vc, animated: true)
+        vibrate()
     }
     
     @objc func beginButtonTapped() {
-        let vc = self.storyboard?.instantiateViewController(identifier: "RulesViewController") as! RulesViewController
+        let vc = self.storyboard?.instantiateViewController(identifier: "MainPlayViewController") as! MainPlayViewController
         self.navigationController?.pushViewController(vc, animated: true)
+        vibrate()
+    }
+    
+    @objc func CreditsButtonTapped() {
+        let vc = self.storyboard?.instantiateViewController(identifier: "CreditsViewController") as! CreditsViewController
+        self.navigationController?.pushViewController(vc, animated: true)
+        vibrate()
     }
 }

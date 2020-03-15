@@ -15,6 +15,7 @@ class GuidelinesViewController: UIViewController {
     
     let guidelinesTextView: UITextView = {
         let tv = UITextView()
+        tv.layer.cornerRadius = 5
         tv.text = guidelines
         tv.textColor = .black
         tv.backgroundColor = .white
@@ -29,13 +30,32 @@ class GuidelinesViewController: UIViewController {
         button.backgroundColor = .green
         button.setTitleColor(UIColor.rgb(red: 48, green: 48, blue: 48, alpha: 1), for: .normal)
         button.layer.cornerRadius = 5
-        button.titleLabel?.font = UIFont(name: "Anton", size: 50)
+        button.titleLabel?.font = buttonFont
         button.addTarget(self, action: #selector(saveGuidelinesTapped), for: .touchUpInside)
         return button
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpViews()
+    }
+    
+    // MARK: Keyboard Responders - listening for the keyboard
+    func addKeyboardResponders() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
+    deinit {
+        // Stop listening for keyboard show/hide events
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
+    // MARK: Setting Up the Views
+    func setUpViews() {
         self.view.backgroundColor = UIColor(patternImage:  backgroundImage)
         navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
@@ -53,19 +73,6 @@ class GuidelinesViewController: UIViewController {
         saveGuidelinesButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: stackViewButtonHeight)
         
         addKeyboardResponders()
-    }
-    
-    func addKeyboardResponders() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-    }
-    
-    deinit {
-        // Stop listening for keyboard show/hide events
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     // Moving the view up and down when the keyboard is opened/closed
@@ -98,7 +105,8 @@ class GuidelinesViewController: UIViewController {
             guidelines = guidelinesText
         }
         if(guidelines != "") {
-            saveGuidelinesButton.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
+            saveGuidelinesButton.backgroundColor = grayColor
+            vibrate()
             // Dismissing the ViewController once the user saves the guidelines
             self.navigationController?.popViewController(animated: true)
             self.dismiss(animated: true, completion: nil)

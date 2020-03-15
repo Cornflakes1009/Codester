@@ -49,7 +49,7 @@ class TimersViewController: UIViewController, UITextFieldDelegate {
         button.backgroundColor = .green
         button.setTitleColor(UIColor.rgb(red: 48, green: 48, blue: 48, alpha: 1), for: .normal)
         button.layer.cornerRadius = 5
-        button.titleLabel?.font = UIFont(name: "Anton", size: 50)
+        button.titleLabel?.font = buttonFont
         button.addTarget(self, action: #selector(submitTimers), for: .touchUpInside)
         return button
     }()
@@ -91,7 +91,8 @@ class TimersViewController: UIViewController, UITextFieldDelegate {
     // MARK: Button Functions
     @objc func submitTimers() {
         timersSet = true
-        submitTimersButton.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
+        submitTimersButton.backgroundColor = grayColor
+        vibrate()
         self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
     }

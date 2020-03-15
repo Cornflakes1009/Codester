@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 // MARK: RGB
 // Simplifying UIColor.rgb. Removes the need to /255 and alpha value.
@@ -160,3 +161,21 @@ extension UITextView {
     }
 }
 
+// MARK: Make Vibration
+/** Use UIDevice.vibrate() to trigger vibration
+ */
+extension UIDevice {
+    static func vibrate() {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+    }
+}
+
+// MARK: Adding a Light Vibration
+/** Light Haptic Feeback for button taps
+ # For other vibrations, see: #
+    https://www.hackingwithswift.com/example-code/uikit/how-to-generate-haptic-feedback-with-uifeedbackgenerator
+ */
+func vibrate() {
+    let generator = UIImpactFeedbackGenerator(style: .light)
+    generator.impactOccurred()
+}

@@ -43,7 +43,7 @@ class RulesViewController: UIViewController {
         button.backgroundColor = .green
         button.setTitleColor(UIColor.rgb(red: 48, green: 48, blue: 48, alpha: 1), for: .normal)
         button.layer.cornerRadius = 5
-        button.titleLabel?.font = UIFont(name: "Anton", size: 50)
+        button.titleLabel?.font = buttonFont
         button.addTarget(self, action: #selector(completeRules), for: .touchUpInside)
         return button
     }()
@@ -68,8 +68,7 @@ class RulesViewController: UIViewController {
         view.addSubview(rulesTextView)
         rulesTextView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: textViewHeight)
         if(rulesClicked) {
-            rulesConfirmationButton.isEnabled = false
-            rulesConfirmationButton.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
+            rulesConfirmationButton.backgroundColor = grayColor
         }
         view.addSubview(rulesConfirmationButton)
         rulesConfirmationButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: stackViewButtonHeight)
@@ -78,8 +77,8 @@ class RulesViewController: UIViewController {
     // MARK: Button Functions
     @objc func completeRules() {
         rulesClicked = true
-        rulesConfirmationButton.isEnabled = false
-        rulesConfirmationButton.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
+        rulesConfirmationButton.backgroundColor = grayColor
+        vibrate()
         // Dismissing the ViewController once the user confirms the rules
         self.navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
