@@ -24,7 +24,7 @@ class MembersViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("Add Member", for: .normal)
         button.backgroundColor = .green
-        button.setTitleColor(UIColor.rgb(red: 48, green: 48, blue: 48, alpha: 1), for: .normal)
+        button.setTitleColor(buttonTitleColor, for: .normal)
         button.layer.cornerRadius = 5
         button.titleLabel?.font = buttonFont
         button.addTarget(self, action: #selector(addMembersTapped), for: .touchUpInside)
@@ -60,11 +60,16 @@ class MembersViewController: UIViewController {
         
         view.addSubview(addTeamTextField)
         addTeamTextField.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewButtonHeight)
+        if(members.count > 2) {
+            memberSubmitButton.backgroundColor = grayColor
+            doneButton.backgroundColor = .green
+        }
         view.addSubview(memberSubmitButton)
         memberSubmitButton.anchor(top: addTeamTextField.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewButtonHeight)
         view.addSubview(tableView)
         tableView.anchor(top: memberSubmitButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: tableViewHeight)
         tableView.layer.cornerRadius = 5
+        tableView.backgroundColor = .white
         
         configureTableView()
         
@@ -82,6 +87,7 @@ class MembersViewController: UIViewController {
     func checkNumOfMembers() {
         if members.count > 2 {
             memberSubmitButton.backgroundColor = grayColor
+            doneButton.backgroundColor = .green
         } else {
             memberSubmitButton.backgroundColor = .green
         }
@@ -116,6 +122,7 @@ extension MembersViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemberCell") as! MemberCell
         cell.set(label: members[indexPath.row])
+        cell.backgroundColor = .white
         return cell
     }
     

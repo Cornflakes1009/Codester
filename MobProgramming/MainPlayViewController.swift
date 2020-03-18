@@ -28,36 +28,53 @@ class MainPlayViewController: UIViewController {
     let driverImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "driver")
-        image.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        image.contentMode = .scaleAspectFit
+        image.clipsToBounds = true
         image.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
+        image.layer.cornerRadius = 10
         return image
     }()
     
     let navigatorImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "navigator")
-        image.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        image.contentMode = .scaleAspectFit
+        image.clipsToBounds = true
+        image.layer.cornerRadius = 10
         image.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
         return image
+    }()
+    
+    let driverLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Driver"
+        label.font = UIFont(name: "Anton", size: 50)
+        label.textAlignment = .center
+        label.textColor = .white
+        return label
+    }()
+    
+    let navigatorLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Navigator"
+        label.font = UIFont(name: "Anton", size: 50)
+        label.textAlignment = .center
+        label.textColor = .white
+        return label
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViews()
         
-//        let value = UIInterfaceOrientation.landscapeLeft.rawValue
-//        UIDevice.current.setValue(value, forKey: "orientation")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-
     }
     
     // MARK: Setting Up the Views
@@ -79,21 +96,29 @@ class MainPlayViewController: UIViewController {
         setupStackViews()
     }
     
-    var imageStackView = UIStackView()
     // MARK: Setting Up the StackView
+    var imageStackView = UIStackView()
+    var nameStackView = UIStackView()
+    
     func setupStackViews() {
+        let screenHeight = UIScreen.main.bounds.size.height
+        let stackViewHeight = CGFloat(screenHeight / 5)
+        
         imageStackView = UIStackView(arrangedSubviews: [driverImage, navigatorImage])
         imageStackView.distribution = .fillEqually
         imageStackView.axis = .horizontal
-        imageStackView.spacing = 10
+        imageStackView.spacing = 100
         
         view.addSubview(imageStackView)
+        imageStackView.anchor(top: titleLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewHeight)
+
         
-//        let screenHeight = UIScreen.main.bounds.size.height
-//        let stackViewHeight = CGFloat(screenHeight / 2)
-        //imageStackView.anchor(top: titleLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 100)
-        imageStackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        imageStackView.widthAnchor.constraint(equalToConstant: 210).isActive = true
-        imageStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        nameStackView = UIStackView(arrangedSubviews: [driverLabel, navigatorLabel])
+        nameStackView.distribution = .fillEqually
+        nameStackView.axis = .horizontal
+        nameStackView.spacing = 100
+        
+        view.addSubview(nameStackView)
+        nameStackView.anchor(top: imageStackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 100)
     }
 }

@@ -27,7 +27,8 @@ class MemberCell: UITableViewCell {
     }
     
     func configureMemberLabel() {
-        memberLabel.textColor                                                                   = .black
+        memberLabel.backgroundColor                                                             =   .white
+        memberLabel.textColor                                                                   =   .black
         memberLabel.numberOfLines                                                               =   0
         memberLabel.adjustsFontSizeToFitWidth                                                   =   true
         memberLabel.translatesAutoresizingMaskIntoConstraints                                   =   false
