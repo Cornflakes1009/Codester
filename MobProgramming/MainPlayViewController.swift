@@ -9,21 +9,17 @@
 import UIKit
 
 class MainPlayViewController: UIViewController {
-
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Codester"
-        label.textAlignment = .center
-        label.layer.shadowColor = UIColor.black.cgColor
-        label.layer.shadowRadius = 3.0
-        label.layer.shadowOpacity = 1.0
-        label.layer.shadowOffset = CGSize(width: 4, height: 4)
-        label.layer.masksToBounds = false
-        label.font = UIFont(name: "Mobsters", size: 90)
-        label.textColor = .white
-        label.backgroundColor = UIColor.rgb(red: 255, green: 0, blue: 0, alpha: 1)
-        return label
-    }()
+    
+    var seconds = roundLength * 60
+    var timerIsRunning = false
+    var timer = Timer()
+    
+    @objc func updateTimer() {
+        if seconds >= 0 {
+            timerLabel.text = "\(seconds)"
+            seconds -= 1
+        }
+    }
     
     let driverImage: UIImageView = {
         let image = UIImageView()
@@ -48,7 +44,7 @@ class MainPlayViewController: UIViewController {
     let driverLabel: UILabel = {
         let label = UILabel()
         label.text = "Driver"
-        label.font = UIFont(name: "Anton", size: 50)
+        label.font = playerLabelFont
         label.textAlignment = .center
         label.textColor = .white
         return label
@@ -57,10 +53,30 @@ class MainPlayViewController: UIViewController {
     let navigatorLabel: UILabel = {
         let label = UILabel()
         label.text = "Navigator"
-        label.font = UIFont(name: "Anton", size: 50)
+        label.font = playerLabelFont
         label.textAlignment = .center
         label.textColor = .white
         return label
+    }()
+    
+    let timerLabel: UILabel = {
+        let label = UILabel()
+        label.text = "\(roundLength * 60)"
+        label.font = timerLabelFont
+        label.textAlignment = .center
+        label.textColor = .white
+        return label
+    }()
+    
+    let startStopButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Start", for: .normal)
+        button.backgroundColor = .green
+        button.setTitleColor(buttonTitleColor, for: .normal)
+        button.layer.cornerRadius = 5
+        button.titleLabel?.font = buttonFont
+        button.addTarget(self, action: #selector(startStopTapped), for: .touchUpInside)
+        return button
     }()
     
     override func viewDidLoad() {
@@ -84,16 +100,15 @@ class MainPlayViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         
-        let screenHeight = UIScreen.main.bounds.size.height
-        let fifthOfScreenHeight = screenHeight / 5
-        
-        view.addSubview(titleLabel)
-        titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: fifthOfScreenHeight)
-        
-//        view.addSubview(drivingImage)
-//        drivingImage.anchor(top: titleLabel.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        
         setupStackViews()
+        
+        view.addSubview(timerLabel)
+        timerLabel.anchor(top: nameStackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
+        
+        view.addSubview(startStopButton)
+        startStopButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -50, paddingRight: 20, width: 0, height: stackViewButtonHeight)
+        
+
     }
     
     // MARK: Setting Up the StackView
@@ -107,18 +122,32 @@ class MainPlayViewController: UIViewController {
         imageStackView = UIStackView(arrangedSubviews: [driverImage, navigatorImage])
         imageStackView.distribution = .fillEqually
         imageStackView.axis = .horizontal
-        imageStackView.spacing = 100
+        imageStackView.spacing = playerStackSpacing
         
         view.addSubview(imageStackView)
-        imageStackView.anchor(top: titleLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewHeight)
+        imageStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 30, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewHeight)
 
         
         nameStackView = UIStackView(arrangedSubviews: [driverLabel, navigatorLabel])
         nameStackView.distribution = .fillEqually
         nameStackView.axis = .horizontal
-        nameStackView.spacing = 100
+        nameStackView.spacing = playerStackSpacing
         
         view.addSubview(nameStackView)
         nameStackView.anchor(top: imageStackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 100)
+    }
+    
+    @objc func startStopTapped() {
+        if(timerIsRunning == false) {
+            timerIsRunning = true
+            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(MainPlayViewController.updateTimer)), userInfo: nil, repeats: true)
+            startStopButton.backgroundColor = .red
+            startStopButton.setTitle("Stop", for: .normal)
+        } else if(timerIsRunning == true) {
+            timerIsRunning = false
+            timer.invalidate()
+            startStopButton.backgroundColor = .green
+            startStopButton.setTitle("Start", for: .normal)
+        }
     }
 }

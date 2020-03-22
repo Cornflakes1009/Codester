@@ -19,7 +19,7 @@ class MenuViewController: UIViewController {
         label.layer.shadowOpacity = 1.0
         label.layer.shadowOffset = CGSize(width: 4, height: 4)
         label.layer.masksToBounds = false
-        label.font = UIFont(name: "Mobsters", size: 90)
+        label.font = titleLabelFont
         label.textColor = .white
         label.backgroundColor = UIColor.rgb(red: 255, green: 0, blue: 0, alpha: 1)
         return label
@@ -28,7 +28,7 @@ class MenuViewController: UIViewController {
     let instructionLabel: UILabel = {
         let label = UILabel()
         label.text = "Read and acknowledge the rules."
-        label.font = UIFont(name: "Anton", size: 20)
+        label.font = instructionLabelFont
         label.textAlignment = .center
         label.textColor = .white
         return label
@@ -167,6 +167,10 @@ class MenuViewController: UIViewController {
         self.view.backgroundColor = UIColor(patternImage:  backgroundImage)
         let screenHeight = UIScreen.main.bounds.size.height
         let fifthOfScreenHeight = screenHeight / 5
+        
+        
+
+        
         view.addSubview(titleLabel)
 
         titleLabel.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: fifthOfScreenHeight)
@@ -179,6 +183,9 @@ class MenuViewController: UIViewController {
         view.addSubview(creditsButton)
         creditsButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: -10, paddingRight: 0, width: 0, height: 0)
         creditsButton.center = self.view.center
+        
+        let buttons = [rulesButton, membersButton, timersButton, guidelinesButton, beginButton]
+        configureVariableViews(on: screenHeight, titleLabel: titleLabel, instructionLabel: instructionLabel, buttons: buttons, creditsButton: creditsButton)
     }
     
     var stackView = UIStackView()
@@ -189,11 +196,11 @@ class MenuViewController: UIViewController {
         stackView.axis = .vertical
         stackView.spacing = 10
         
-        view.addSubview(stackView)
-        
         let screenHeight = UIScreen.main.bounds.size.height
         let stackViewHeight = CGFloat(screenHeight / 2)
         stackViewButtonHeight = CGFloat((stackViewHeight - 40) / 5)
+        
+        view.addSubview(stackView)
         stackView.anchor(top: instructionLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewHeight)
     }
     

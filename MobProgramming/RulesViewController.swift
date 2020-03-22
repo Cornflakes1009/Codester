@@ -29,11 +29,12 @@ class RulesViewController: UIViewController {
         7. Follow the app to determine turns and breaks.
         8. Mob programming is over when the app is complete or the session time runs out. Ex. 6pm-8pm.
         """
+        tv.font = rulesFont
         tv.textColor = .white
         tv.backgroundColor = .clear
         tv.isEditable = false
         tv.isSelectable = false
-        tv.isScrollEnabled = false
+        tv.isScrollEnabled = true
         return tv
     }()
 
@@ -41,7 +42,7 @@ class RulesViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("I Read the Rules", for: .normal)
         button.backgroundColor = .green
-        button.setTitleColor(UIColor.rgb(red: 48, green: 48, blue: 48, alpha: 1), for: .normal)
+        button.setTitleColor(buttonTitleColor, for: .normal)
         button.layer.cornerRadius = 5
         button.titleLabel?.font = buttonFont
         button.addTarget(self, action: #selector(completeRules), for: .touchUpInside)
@@ -64,7 +65,7 @@ class RulesViewController: UIViewController {
         if(screenHeight < 569) {
             rulesConfirmationButton.titleLabel?.font = UIFont(name: "Anton", size: 40)
         }
-        let textViewHeight = CGFloat(screenHeight * 0.75)
+        let textViewHeight = CGFloat(screenHeight * 0.7)
         view.addSubview(rulesTextView)
         rulesTextView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: textViewHeight)
         if(rulesClicked) {

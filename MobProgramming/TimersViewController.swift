@@ -14,7 +14,7 @@ class TimersViewController: UIViewController, UITextFieldDelegate {
     let minsPerRoundLabel: UILabel = {
         let label = UILabel()
         label.text = "Select Minutes Per Round"
-        label.font = UIFont(name: "Anton", size: 20)
+        label.font = instructionLabelFont
         label.textAlignment = .center
         label.textColor = .white
         return label
@@ -30,7 +30,7 @@ class TimersViewController: UIViewController, UITextFieldDelegate {
     let minsPerBreakLabel: UILabel = {
         let label = UILabel()
         label.text = "Select Minutes Per Break"
-        label.font = UIFont(name: "Anton", size: 20)
+        label.font = instructionLabelFont
         label.textAlignment = .center
         label.textColor = .white
         return label
