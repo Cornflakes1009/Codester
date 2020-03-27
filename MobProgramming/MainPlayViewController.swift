@@ -7,17 +7,23 @@
 //
 
 import UIKit
+import AVFoundation
 
 class MainPlayViewController: UIViewController {
     
-    var seconds = roundLength * 60
+    var time = roundLength * 60
     var timerIsRunning = false
     var timer = Timer()
     
     @objc func updateTimer() {
-        if seconds >= 0 {
-            timerLabel.text = "\(seconds)"
-            seconds -= 1
+        if time >= 0 {
+            calculateDisplayTime()
+            time -= 1
+        } else {
+            // Play sound
+            
+            // Trigger modal
+            
         }
     }
     
@@ -61,10 +67,36 @@ class MainPlayViewController: UIViewController {
     
     let timerLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(roundLength * 60)"
         label.font = timerLabelFont
         label.textAlignment = .center
         label.textColor = .white
+        return label
+    }()
+    
+    let colonLabel: UILabel = {
+        let label = UILabel()
+        label.font = timerLabelFont
+        label.text = " : "
+        label.textAlignment = .center
+        label.textColor = .white
+        return label
+    }()
+    
+    let minutesLabel: UILabel = {
+        let label = UILabel()
+        label.font = timerLabelFont
+        label.textAlignment = .right
+        label.textColor = .white
+        label.text = "05"
+        return label
+    }()
+    
+    let secondsLabel: UILabel = {
+        let label = UILabel()
+        label.font = timerLabelFont
+        label.textAlignment = .left
+        label.textColor = .white
+        label.text = "31"
         return label
     }()
     
@@ -102,21 +134,23 @@ class MainPlayViewController: UIViewController {
         
         setupStackViews()
         
-        view.addSubview(timerLabel)
-        timerLabel.anchor(top: nameStackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
+//        view.addSubview(timerLabel)
+//        timerLabel.anchor(top: nameStackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
         
         view.addSubview(startStopButton)
         startStopButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -50, paddingRight: 20, width: 0, height: stackViewButtonHeight)
         
-
+        calculateDisplayTime()
     }
     
     // MARK: Setting Up the StackView
     var imageStackView = UIStackView()
     var nameStackView = UIStackView()
+    var timeStackView = UIStackView()
     
     func setupStackViews() {
         let screenHeight = UIScreen.main.bounds.size.height
+        let screenWidth = UIScreen.main.bounds.size.width
         let stackViewHeight = CGFloat(screenHeight / 5)
         
         imageStackView = UIStackView(arrangedSubviews: [driverImage, navigatorImage])
@@ -135,6 +169,31 @@ class MainPlayViewController: UIViewController {
         
         view.addSubview(nameStackView)
         nameStackView.anchor(top: imageStackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 100)
+        
+        timeStackView = UIStackView(arrangedSubviews: [minutesLabel, colonLabel, secondsLabel])
+        timeStackView.distribution = .fillEqually
+        timeStackView.axis = .horizontal
+        timeStackView.spacing = 1
+        
+        view.addSubview(timeStackView)
+//        timeStackView.anchor(top: nameStackView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: screenWidth / 2, height: 100)
+        
+        timeStackView.topAnchor.constraint(equalTo: nameStackView.bottomAnchor, constant: 10).isActive = true
+        timeStackView.widthAnchor.constraint(equalToConstant: screenWidth / 2).isActive = true
+        timeStackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        timeStackView.center = view.center
+    }
+    
+    func calculateDisplayTime() {
+        var minutes: Int = time / 60
+        let seconds: Int = time % 60
+        
+        if(minutes < 1) {
+            minutes = 00
+        }
+        
+        timerLabel.text = "\(minutes):\(seconds)"
+        
     }
     
     @objc func startStopTapped() {
