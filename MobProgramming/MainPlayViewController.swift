@@ -11,30 +11,54 @@ import AVFoundation
 
 class MainPlayViewController: UIViewController {
     
-    var time = roundLength * 60
+    var audioPlayer: AVAudioPlayer?
+    let pathToSound = Bundle.main.path(forResource: "timesUp", ofType: "wav")!
+    
     var timerIsRunning = false
     var timer = Timer()
     
     @objc func updateTimer() {
-        if time >= 0 {
+        if currentRoundLength >= 0 {
             calculateDisplayTime()
-            time -= 1
+            currentRoundLength -= 1
         } else {
+            timer.invalidate()
             // Play sound
+            let url = URL(fileURLWithPath: pathToSound)
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer?.play()
+            } catch {}
             
-            // Trigger modal
+            triggerPopup()
             
+            startStopButton.backgroundColor = .green
+            startStopButton.setTitle("Start", for: .normal)
         }
     }
+    
+    // MARK: Creating UI components
     
     let driverImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "driver")
         image.contentMode = .scaleAspectFit
         image.clipsToBounds = true
-        image.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
-        image.layer.cornerRadius = 10
         return image
+    }()
+    
+    let navigatorView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 5
+        view.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
+        return view
+    }()
+    
+    let driverView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 5
+        view.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
+        return view
     }()
     
     let navigatorImage: UIImageView = {
@@ -42,8 +66,6 @@ class MainPlayViewController: UIViewController {
         image.image = UIImage(named: "navigator")
         image.contentMode = .scaleAspectFit
         image.clipsToBounds = true
-        image.layer.cornerRadius = 10
-        image.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
         return image
     }()
     
@@ -76,7 +98,7 @@ class MainPlayViewController: UIViewController {
     let colonLabel: UILabel = {
         let label = UILabel()
         label.font = timerLabelFont
-        label.text = " : "
+        label.text = ":"
         label.textAlignment = .center
         label.textColor = .white
         return label
@@ -85,7 +107,7 @@ class MainPlayViewController: UIViewController {
     let minutesLabel: UILabel = {
         let label = UILabel()
         label.font = timerLabelFont
-        label.textAlignment = .right
+        label.textAlignment = .center
         label.textColor = .white
         label.text = "05"
         return label
@@ -94,7 +116,7 @@ class MainPlayViewController: UIViewController {
     let secondsLabel: UILabel = {
         let label = UILabel()
         label.font = timerLabelFont
-        label.textAlignment = .left
+        label.textAlignment = .center
         label.textColor = .white
         label.text = "31"
         return label
@@ -111,10 +133,38 @@ class MainPlayViewController: UIViewController {
         return button
     }()
     
+    let popUpView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.layer.cornerRadius = 5
+        return view
+    }()
+    
+    let roundOverLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Round Over"
+        label.font = buttonFont
+        label.textAlignment = .center
+        label.textColor = .white
+        return label
+    }()
+    
+    let nextRoundButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Start Round", for: .normal)
+        button.backgroundColor = .green
+        button.setTitleColor(buttonTitleColor, for: .normal)
+        button.layer.cornerRadius = 5
+        button.titleLabel?.font = buttonFont
+        button.addTarget(self, action: #selector(nextRoundButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    // ------- End of creating UI components ------- //
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViews()
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -134,9 +184,6 @@ class MainPlayViewController: UIViewController {
         
         setupStackViews()
         
-//        view.addSubview(timerLabel)
-//        timerLabel.anchor(top: nameStackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
-        
         view.addSubview(startStopButton)
         startStopButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -50, paddingRight: 20, width: 0, height: stackViewButtonHeight)
         
@@ -153,14 +200,19 @@ class MainPlayViewController: UIViewController {
         let screenWidth = UIScreen.main.bounds.size.width
         let stackViewHeight = CGFloat(screenHeight / 5)
         
-        imageStackView = UIStackView(arrangedSubviews: [driverImage, navigatorImage])
+        imageStackView = UIStackView(arrangedSubviews: [driverView, navigatorView])
         imageStackView.distribution = .fillEqually
         imageStackView.axis = .horizontal
         imageStackView.spacing = playerStackSpacing
         
         view.addSubview(imageStackView)
         imageStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 30, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewHeight)
-
+        
+        driverView.addSubview(driverImage)
+        driverImage.anchor(top: driverView.topAnchor, left: driverView.leftAnchor, bottom: driverView.bottomAnchor, right: driverView.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: -10, paddingRight: 10, width: 0, height: 0)
+        
+        navigatorView.addSubview(navigatorImage)
+        navigatorImage.anchor(top: navigatorView.topAnchor, left: navigatorView.leftAnchor, bottom: navigatorView.bottomAnchor, right: navigatorView.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: -10, paddingRight: 10, width: 0, height: 0)
         
         nameStackView = UIStackView(arrangedSubviews: [driverLabel, navigatorLabel])
         nameStackView.distribution = .fillEqually
@@ -176,24 +228,65 @@ class MainPlayViewController: UIViewController {
         timeStackView.spacing = 1
         
         view.addSubview(timeStackView)
-//        timeStackView.anchor(top: nameStackView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: screenWidth / 2, height: 100)
+        timeStackView.anchor(top: nameStackView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: screenWidth * 0.5, height: 100)
+        timeStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+    
+    func triggerPopup() {
+        view.addSubview(popUpView)
+        popUpView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: 0)
         
-        timeStackView.topAnchor.constraint(equalTo: nameStackView.bottomAnchor, constant: 10).isActive = true
-        timeStackView.widthAnchor.constraint(equalToConstant: screenWidth / 2).isActive = true
-        timeStackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        timeStackView.center = view.center
+        
+        view.addSubview(roundOverLabel)
+        roundOverLabel.anchor(top: popUpView.topAnchor, left: popUpView.leftAnchor, bottom: nil, right: popUpView.rightAnchor, paddingTop: 5, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
+        
+        view.addSubview(nextRoundButton)
+        nextRoundButton.anchor(top: nil, left: popUpView.leftAnchor, bottom: popUpView.bottomAnchor, right: popUpView.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: stackViewButtonHeight)
     }
     
     func calculateDisplayTime() {
-        var minutes: Int = time / 60
-        let seconds: Int = time % 60
+        let minutes: Int = currentRoundLength / 60
+        let seconds: Int = currentRoundLength % 60
+        var minutesString = String()
+        var secondsString = String()
         
-        if(minutes < 1) {
-            minutes = 00
+        if(minutes > 1 && minutes < 10) {
+            minutesString = "0\(minutes)"
+        } else if (minutes < 1){
+                minutesString = "00"
+        } else {
+            minutesString = String(minutes)
         }
         
-        timerLabel.text = "\(minutes):\(seconds)"
+        if (seconds < 10) {
+            secondsString = "0\(seconds)"
+        } else if (seconds == 0) {
+            secondsString = "00"
+        } else {
+            secondsString = String(seconds)
+        }
         
+        minutesLabel.text = minutesString
+        secondsLabel.text = secondsString
+        
+    }
+    
+    func nextRound() {
+        
+        // check if break time
+        
+        // dismiss the modal
+        
+        // update the navigator and driver labels
+        
+        // update the timer labels
+        
+        // increment the round counter
+        if(memberIndex == members.count) {
+            memberIndex = 0
+        } else {
+            memberIndex += 1
+        }
     }
     
     @objc func startStopTapped() {
@@ -208,5 +301,9 @@ class MainPlayViewController: UIViewController {
             startStopButton.backgroundColor = .green
             startStopButton.setTitle("Start", for: .normal)
         }
+    }
+    
+    @objc func nextRoundButtonTapped() {
+        popUpView.removeFromSuperview()
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D9268817243594CA008B3374 /* timesUp.wav in Resources */ = {isa = PBXBuildFile; fileRef = D9268816243594CA008B3374 /* timesUp.wav */; };
 		D95DFFE424088EA800B16079 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95DFFE324088EA800B16079 /* AppDelegate.swift */; };
 		D95DFFE624088EA800B16079 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95DFFE524088EA800B16079 /* SceneDelegate.swift */; };
 		D95DFFE824088EA800B16079 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95DFFE724088EA800B16079 /* MenuViewController.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D9268816243594CA008B3374 /* timesUp.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = timesUp.wav; sourceTree = "<group>"; };
 		D95DFFE024088EA800B16079 /* Codester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Codester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D95DFFE324088EA800B16079 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D95DFFE524088EA800B16079 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				D95DFFEE24088EAB00B16079 /* LaunchScreen.storyboard */,
 				D95DFFF92408AFC300B16079 /* Mobsters.ttf */,
 				D970A4152408B79800E272F2 /* Globals.swift */,
+				D9268816243594CA008B3374 /* timesUp.wav */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9268817243594CA008B3374 /* timesUp.wav in Resources */,
 				D970A41A2408FB5400E272F2 /* Anton.ttf in Resources */,
 				D95DFFF024088EAB00B16079 /* LaunchScreen.storyboard in Resources */,
 				D95DFFED24088EAB00B16079 /* Assets.xcassets in Resources */,

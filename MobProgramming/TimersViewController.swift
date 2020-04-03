@@ -114,6 +114,7 @@ extension TimersViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == minutesPerRoundPickerView {
             roundLength = times[row]
+            currentRoundLength = roundLength * 60
         } else {
             breakLength = times[row]
         }
