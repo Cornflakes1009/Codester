@@ -23,6 +23,8 @@ class MainPlayViewController: UIViewController {
             currentRoundLength -= 1
         } else {
             timer.invalidate()
+            timerIsRunning = false
+            
             // Play sound
             let url = URL(fileURLWithPath: pathToSound)
             do {
@@ -109,7 +111,7 @@ class MainPlayViewController: UIViewController {
         label.font = timerLabelFont
         label.textAlignment = .center
         label.textColor = .white
-        label.text = "05"
+        label.text = String()
         return label
     }()
     
@@ -118,7 +120,7 @@ class MainPlayViewController: UIViewController {
         label.font = timerLabelFont
         label.textAlignment = .center
         label.textColor = .white
-        label.text = "31"
+        label.text = String()
         return label
     }()
     
@@ -149,6 +151,40 @@ class MainPlayViewController: UIViewController {
         return label
     }()
     
+    let nextNavigatorLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Next Navigator"
+        label.font = playerLabelFont
+        label.textAlignment = .center
+        label.textColor = .white
+        return label
+    }()
+    
+    let nextNavigator: UILabel = {
+        let label = UILabel()
+        label.font = playerLabelFont
+        label.textAlignment = .center
+        label.textColor = .white
+        return label
+    }()
+    
+    let nextDriverLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Next Driver"
+        label.font = playerLabelFont
+        label.textAlignment = .center
+        label.textColor = .white
+        return label
+    }()
+    
+    let nextDriver: UILabel = {
+        let label = UILabel()
+        label.font = playerLabelFont
+        label.textAlignment = .center
+        label.textColor = .white
+        return label
+    }()
+    
     let nextRoundButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Start Round", for: .normal)
@@ -169,6 +205,7 @@ class MainPlayViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        timer.invalidate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -199,6 +236,9 @@ class MainPlayViewController: UIViewController {
         let screenHeight = UIScreen.main.bounds.size.height
         let screenWidth = UIScreen.main.bounds.size.width
         let stackViewHeight = CGFloat(screenHeight / 5)
+        
+        driverLabel.text = members[memberIndex]
+        navigatorLabel.text = members[memberIndex + 1]
         
         imageStackView = UIStackView(arrangedSubviews: [driverView, navigatorView])
         imageStackView.distribution = .fillEqually
@@ -233,6 +273,10 @@ class MainPlayViewController: UIViewController {
     }
     
     func triggerPopup() {
+        let popupViewHeight = self.popUpView.frame.size.height
+        
+        updateLabels()
+        
         view.addSubview(popUpView)
         popUpView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: 0)
         
@@ -240,10 +284,22 @@ class MainPlayViewController: UIViewController {
         view.addSubview(roundOverLabel)
         roundOverLabel.anchor(top: popUpView.topAnchor, left: popUpView.leftAnchor, bottom: nil, right: popUpView.rightAnchor, paddingTop: 5, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
         
-        view.addSubview(nextRoundButton)
+        var popupStackView = UIStackView()
+        popupStackView = UIStackView(arrangedSubviews: [nextDriverLabel, nextDriver, nextNavigatorLabel, nextNavigator])
+        
+        popupStackView.distribution = .fillEqually
+        popupStackView.axis = .vertical
+        popupStackView.spacing = playerStackSpacing
+        
+        let popupStackViewHeight = popupViewHeight / 2
+        popUpView.addSubview(popupStackView)
+        popupStackView.anchor(top: roundOverLabel.bottomAnchor, left: popUpView.leftAnchor, bottom: nil, right: popUpView.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: popupStackViewHeight)
+        
+        popUpView.addSubview(nextRoundButton)
         nextRoundButton.anchor(top: nil, left: popUpView.leftAnchor, bottom: popUpView.bottomAnchor, right: popUpView.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: stackViewButtonHeight)
     }
     
+    // MARK: Setting Display Time
     func calculateDisplayTime() {
         let minutes: Int = currentRoundLength / 60
         let seconds: Int = currentRoundLength % 60
@@ -253,7 +309,7 @@ class MainPlayViewController: UIViewController {
         if(minutes > 1 && minutes < 10) {
             minutesString = "0\(minutes)"
         } else if (minutes < 1){
-                minutesString = "00"
+            minutesString = "00"
         } else {
             minutesString = String(minutes)
         }
@@ -268,27 +324,32 @@ class MainPlayViewController: UIViewController {
         
         minutesLabel.text = minutesString
         secondsLabel.text = secondsString
-        
     }
     
-    func nextRound() {
+    // MARK: Updating Driver, Navigator, and Timer Labels
+    func updateLabels() {
+        calculateDisplayTime()
         
-        // check if break time
-        
-        // dismiss the modal
-        
-        // update the navigator and driver labels
-        
-        // update the timer labels
-        
-        // increment the round counter
-        if(memberIndex == members.count) {
+        if(memberIndex + 1 == members.count) {
             memberIndex = 0
         } else {
             memberIndex += 1
         }
+        
+        driverLabel.text = members[memberIndex]
+        nextDriver.text = members[memberIndex]
+        
+        if(memberIndex + 1 == members.count) {
+            navigatorLabel.text = members[0]
+            nextNavigator.text = members[0]
+        } else {
+            navigatorLabel.text = members[memberIndex + 1]
+            nextNavigator.text = members[memberIndex + 1]
+        }
+        
     }
     
+    // MARK: Starting and Stopping Timer
     @objc func startStopTapped() {
         if(timerIsRunning == false) {
             timerIsRunning = true
@@ -303,7 +364,10 @@ class MainPlayViewController: UIViewController {
         }
     }
     
+    // MARK: Button for Dismissing Pop Up
     @objc func nextRoundButtonTapped() {
         popUpView.removeFromSuperview()
+        currentRoundLength = roundLength
+        updateLabels()
     }
 }

@@ -91,18 +91,19 @@ class MembersViewController: UIViewController {
         } else {
             memberSubmitButton.backgroundColor = .green
         }
+        membersSet = members.count > 2 ?  true : false
     }
     
     @objc func addMembersTapped() {
         addTeamTextField.resignFirstResponder()
-        if(addTeamTextField.text != "") {
-            if let member = addTeamTextField.text {
+        if let member = addTeamTextField.text {
+            if(member.trim() != "") {
                 members.append(member)
                 membersSet = members.count > 2 ?  true : false
-                addTeamTextField.text = nil
                 tableView.reloadData()
             }
         }
+        addTeamTextField.text = nil
         checkNumOfMembers()
     }
     

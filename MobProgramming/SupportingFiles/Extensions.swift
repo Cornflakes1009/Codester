@@ -179,3 +179,13 @@ func vibrate() {
     let generator = UIImpactFeedbackGenerator(style: .light)
     generator.impactOccurred()
 }
+
+// MARK: Trim String
+/** Usage: let someString = "Hello   ".trim() */
+extension String
+{
+    func trim() -> String
+   {
+    return self.trimmingCharacters(in: NSCharacterSet.whitespaces)
+   }
+}

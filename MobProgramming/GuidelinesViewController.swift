@@ -104,7 +104,7 @@ class GuidelinesViewController: UIViewController {
             guidelinesSet = true
             guidelines = guidelinesText
         }
-        if(guidelines != "") {
+        if(guidelines.trim() != "") {
             saveGuidelinesButton.backgroundColor = grayColor
             vibrate()
             // Dismissing the ViewController once the user saves the guidelines
