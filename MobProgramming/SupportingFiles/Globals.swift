@@ -22,6 +22,7 @@ var rulesClicked                    =   false
 var membersSet                      =   false
 var timersSet                       =   false
 var guidelinesSet                   =   false
+var breakTime                       =   false
 var stackViewButtonHeight: CGFloat  =   0
 let grayColor                       =   UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
 let buttonTitleColor                =   UIColor.rgb(red: 48, green: 48, blue: 48, alpha: 1)
@@ -29,7 +30,7 @@ var titleLabelFont                  =   UIFont(name: "Mobsters", size: 90)
 var instructionLabelFont            =   UIFont(name: "Anton", size: 20)
 var buttonFont                      =   UIFont(name: "Anton", size: 50)
 var rulesFont                       =   UIFont.systemFont(ofSize: 15)
-var playerLabelFont                 =   UIFont(name: "Anton", size: 20)
+var playerLabelFont                 =   UIFont(name: "Anton", size: 30)
 var timerLabelFont                  =   UIFont(name: "Anton", size: 50)
 var playerStackSpacing: CGFloat     =   20
 

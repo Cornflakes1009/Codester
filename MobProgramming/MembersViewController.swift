@@ -101,6 +101,7 @@ class MembersViewController: UIViewController {
                 members.append(member)
                 membersSet = members.count > 2 ?  true : false
                 tableView.reloadData()
+                vibrate()
             }
         }
         addTeamTextField.text = nil
