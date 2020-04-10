@@ -1,0 +1,6 @@
+framework module Pods_MobProgramming {
+  umbrella header "Pods-MobProgramming-umbrella.h"
+
+  export *
+  module * { export * }
+}

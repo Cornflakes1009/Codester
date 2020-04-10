@@ -15,8 +15,8 @@ var members                         =   [String]()
 var memberIndex                     =   0
 var roundLength                     =   1
 var currentRoundLength              =   60
-var breakLength                     =   0
-var currentBreakLength              =   0
+var breakLength                     =   1
+var currentBreakLength              =   60
 var guidelines                      =   String()
 var rulesClicked                    =   false
 var membersSet                      =   false
@@ -33,6 +33,7 @@ var rulesFont                       =   UIFont.systemFont(ofSize: 15)
 var playerLabelFont                 =   UIFont(name: "Anton", size: 30)
 var timerLabelFont                  =   UIFont(name: "Anton", size: 50)
 var playerStackSpacing: CGFloat     =   20
+let adUnitID                        =   "ca-app-pub-3940256099942544/4411468910"
 
 // MARK: Setting Button Green
 func setGreen(button: UIButton) {

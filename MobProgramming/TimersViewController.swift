@@ -117,6 +117,7 @@ extension TimersViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             currentRoundLength = roundLength * 60
         } else {
             breakLength = times[row]
+            currentBreakLength = breakLength * 60
         }
     }
     
