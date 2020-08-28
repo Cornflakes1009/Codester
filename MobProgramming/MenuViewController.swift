@@ -85,18 +85,7 @@ class MenuViewController: UIViewController {
         button.setTitleColor(buttonTitleColor, for: .normal)
         button.layer.cornerRadius = 5
         button.titleLabel?.font = buttonFont
-        
-        
-        
-        
-        
-        //button.isEnabled = false
-        
-        
-        
-        
-        
-        
+        button.isEnabled = false
         button.addTarget(self, action: #selector(beginButtonTapped), for: .touchUpInside)
         return button
     }()

@@ -10,10 +10,23 @@ import UIKit
 
 class CreditsViewController: UIViewController {
 
+    let creditsTextView: UITextView = {
+        let tv = UITextView()
+        tv.text = """
+        I would like to give a special thanks to my girlfriend, Rechie who created the app icon and to the PDX CocoaHeads group for giving me the idea to make this app. I hope everyone using this finds it helpful and enjoyable. Happy coding.
+        """
+        tv.font = rulesFont
+        tv.textColor = .white
+        tv.backgroundColor = .clear
+        tv.isEditable = false
+        tv.isSelectable = false
+        tv.isScrollEnabled = true
+        return tv
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViews()
-        
     }
    
     func setUpViews() {
@@ -22,9 +35,14 @@ class CreditsViewController: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
 
         let screenHeight = UIScreen.main.bounds.size.height
-        if(screenHeight < 569) {
-            
-        }
+          if(screenHeight < 569) {
+
+          }
+        
+        let textViewHeight = CGFloat(screenHeight * 0.7)
+        
+        view.addSubview(creditsTextView)
+        creditsTextView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: textViewHeight)
     }
 
 

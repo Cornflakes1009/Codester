@@ -14,7 +14,7 @@ let backgroundImage                 =   UIImage(named: "dark-honeycomb.png")!
 var members                         =   [String]()
 var memberIndex                     =   0
 var roundLength                     =   1
-var currentRoundLength              =   60
+var currentRoundLength              =   5
 var breakLength                     =   1
 var currentBreakLength              =   60
 var guidelines                      =   String()
@@ -62,8 +62,8 @@ func setGray(button: UIButton) {
 */
 
 enum Devices: CGFloat {
-    case elevenHeight               =     812
-    case elevenProMaxHeight         =     896
+    case elevenAndProMaxHeight         =     896
+    case elevenProHeight            =     812
     case eightPlusHeight            =     736
     case eightHeight                =     667
     case sEHeight                   =     568
@@ -77,12 +77,35 @@ enum Devices: CGFloat {
  */
 func configureVariableViews(on screenSize: CGFloat, titleLabel: UILabel, instructionLabel: UILabel, buttons: [UIButton], creditsButton: UIButton) {
     switch screenSize {
-    case Devices.elevenHeight.rawValue:
+    case Devices.elevenAndProMaxHeight.rawValue:
+        buttonFont = UIFont(name: "Anton", size: 55)
+        titleLabelFont = UIFont(name: "Mobsters", size: 110)
+        titleLabel.font = titleLabelFont
+        instructionLabelFont = UIFont(name: "Anton", size: 25)
+        instructionLabel.font = instructionLabelFont
+        creditsButton.titleLabel?.font = UIFont(name: "Anton", size: 30)
+        rulesFont = UIFont.systemFont(ofSize: 18)
+        
+    case Devices.elevenProHeight.rawValue:
         buttonFont = UIFont(name: "Anton", size: 50)
-    case Devices.elevenProMaxHeight.rawValue:
         buttonFont = UIFont(name: "Anton", size: 50)
+        titleLabelFont = UIFont(name: "Mobsters", size: 100)
+        titleLabel.font = titleLabelFont
+        instructionLabelFont = UIFont(name: "Anton", size: 23)
+        instructionLabel.font = instructionLabelFont
+        creditsButton.titleLabel?.font = UIFont(name: "Anton", size: 30)
+        rulesFont = UIFont.systemFont(ofSize: 18)
+        
     case Devices.eightPlusHeight.rawValue:
         buttonFont = UIFont(name: "Anton", size: 50)
+        buttonFont = UIFont(name: "Anton", size: 50)
+        titleLabelFont = UIFont(name: "Mobsters", size: 100)
+        titleLabel.font = titleLabelFont
+        instructionLabelFont = UIFont(name: "Anton", size: 23)
+        instructionLabel.font = instructionLabelFont
+        creditsButton.titleLabel?.font = UIFont(name: "Anton", size: 30)
+        rulesFont = UIFont.systemFont(ofSize: 18)
+        
     case Devices.eightHeight.rawValue:
         buttonFont = UIFont(name: "Anton", size: 50)
         
