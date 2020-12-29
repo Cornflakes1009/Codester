@@ -95,6 +95,7 @@ class MenuViewController: UIViewController {
         button.setTitle("Credits", for: .normal)
         button.tintColor = .white
         button.titleLabel?.font = UIFont(name: "Anton", size: 25)
+//        button.accessbilityIdentifier =
         button.addTarget(self, action: #selector(CreditsButtonTapped), for: .touchUpInside)
         return button
     }()

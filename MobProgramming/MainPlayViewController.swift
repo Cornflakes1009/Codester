@@ -103,7 +103,7 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         return button
     }()
     
-    // MARK: Round Over Popup
+    // MARK:- Round Over Popup
     let popUpView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
@@ -165,7 +165,7 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         return button
     }()
     
-    // MARK: Break Time Popup
+    // MARK:- Break Time Popup
     let breakTimepopUpView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
@@ -220,7 +220,7 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         return button
     }()
     
-    // ------- End of creating UI components ------- //
+    // MARK:- Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -269,14 +269,14 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         super.viewWillAppear(animated)
     }
     
-    // MARK: AdMob Function
+    // MARK:- AdMob Function
     func createAd() -> GADInterstitial{
         let inter = GADInterstitial(adUnitID: adUnitID)
         inter.load(GADRequest())
         return inter
     }
     
-    // MARK: Setting Up the Views
+    // MARK:- Setting Up the Views
     func setUpViews() {
         view.backgroundColor = .black
         self.view.backgroundColor = UIColor(patternImage:  backgroundImage)
@@ -291,7 +291,7 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         calculateDisplayTime(time: currentRoundLength, minLabel: minutesLabel, secLabel: secondsLabel)
     }
     
-    // MARK: Setting Up the StackView
+    // MARK:- Setting Up the StackView
     var imageStackView = UIStackView()
     var nameStackView = UIStackView()
     var timeStackView = UIStackView()
@@ -341,7 +341,7 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         timeStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
-    // MARK: Triggering the Next Round View
+    // MARK:- Triggering the Next Round View
     func triggerNextRoundPopup() {
         let popupViewHeight = self.popUpView.frame.size.height
         
@@ -366,11 +366,11 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         nextRoundButton.anchor(top: nil, left: popUpView.leftAnchor, bottom: popUpView.bottomAnchor, right: popUpView.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: stackViewButtonHeight)
     }
  
-    // MARK: Triggering the Break Time View
+    // MARK:- Triggering the Break Time View
     var breakTimeStackView = UIStackView()
     func triggerBreakPopup() {
         let breakTimePopupViewWidth = self.breakTimepopUpView.frame.size.width
-//        currentBreakLength = breakLength * 60
+        currentBreakLength = breakLength * 60
 //        breakTimerIsRunning = true
 //        breakTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(MainPlayViewController.updateBreakTimer)), userInfo: nil, repeats: true)
         
@@ -485,8 +485,8 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
     var timer = Timer()
     @objc func updateTimer() {
         if currentRoundLength >= 0 {
-            currentRoundLength -= 1
             calculateDisplayTime(time: currentRoundLength, minLabel: minutesLabel, secLabel: secondsLabel)
+            currentRoundLength -= 1
         } else {
             timer.invalidate()
             timerIsRunning = false
