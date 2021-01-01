@@ -89,17 +89,66 @@ class MenuViewController: UIViewController {
         button.addTarget(self, action: #selector(beginButtonTapped), for: .touchUpInside)
         return button
     }()
-    
+
+    let explanationButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("WHAT IS CODESTER?", for: .normal)
+        button.tintColor = .white
+        button.titleLabel?.font = UIFont(name: "Anton", size: 25)
+        button.addTarget(self, action: #selector(explanationButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
     let creditsButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Credits", for: .normal)
         button.tintColor = .white
         button.titleLabel?.font = UIFont(name: "Anton", size: 25)
-//        button.accessbilityIdentifier =
-        button.addTarget(self, action: #selector(CreditsButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(creditsButtonTapped), for: .touchUpInside)
         return button
     }()
     
+    // MARK:- Explanation Popup
+    let popUpView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.layer.cornerRadius = 5
+        view.alpha = 0
+        return view
+    }()
+    
+    let popupViewTopLabel: UILabel = {
+        let label = UILabel()
+        label.text = "WHAT IS CODESTER?"
+        label.font = buttonFont
+        label.textAlignment = .center
+        label.textColor = .white
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    let explanationLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Codester is a tool to facilitate team work amongst developers. A group of developers work together to complete a single project and each person takes turns being the leader, collaborator, and the follower."
+        label.font = rulesFont
+        label.textAlignment = .center
+        label.textColor = .white
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    let dismissPopupViewButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("DISMISS", for: .normal)
+        button.backgroundColor = .green
+        button.setTitleColor(buttonTitleColor, for: .normal)
+        button.layer.cornerRadius = 5
+        button.titleLabel?.font = buttonFont
+        button.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    // MARK:- Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViews()
@@ -108,22 +157,32 @@ class MenuViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        
-        if(rulesClicked == false) {
+
+        // Setting buttons to be green/gray depending on what the user needs to do
+        if !rulesClicked {
             setGreen(button: rulesButton)
-        } else if(membersSet == false) {
+        } else {
             setGray(button: rulesButton)
+        }
+        
+        if rulesClicked && !membersSet {
             instructionLabel.text = "Enter group members."
             setGreen(button: membersButton)
-        } else if(timersSet == false) {
+        }
+        
+        if rulesClicked && membersSet && !timersSet {
             setGray(button: membersButton)
             instructionLabel.text = "Set the timers."
             setGreen(button: timersButton)
-        }else if(guidelinesSet == false) {
-            timersButton.backgroundColor = UIColor.rgb(red: 217, green: 217, blue: 217, alpha: 1)
+        }
+        
+        if rulesClicked && membersSet && timersSet && !guidelinesSet {
+            setGray(button: timersButton)
             instructionLabel.text = "Enter the project guidelines."
             guidelinesButton.backgroundColor = .green
-        } else {
+        }
+        
+        if rulesClicked && membersSet && timersSet && guidelinesSet {
             setGray(button: rulesButton)
             setGray(button: membersButton)
             setGray(button: timersButton)
@@ -151,15 +210,12 @@ class MenuViewController: UIViewController {
         }
     }
     
-    // MARK: Setting Up the Views
+    // MARK:- Setting Up the Views
     func setUpViews() {
         view.backgroundColor = .black
         self.view.backgroundColor = UIColor(patternImage:  backgroundImage)
         let screenHeight = UIScreen.main.bounds.size.height
         let fifthOfScreenHeight = screenHeight / 5
-        
-        
-
         
         view.addSubview(titleLabel)
 
@@ -173,6 +229,9 @@ class MenuViewController: UIViewController {
         view.addSubview(creditsButton)
         creditsButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: -10, paddingRight: 0, width: 0, height: 0)
         creditsButton.center = self.view.center
+        
+        view.addSubview(explanationButton)
+        explanationButton.anchor(top: stackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
         
         let buttons = [rulesButton, membersButton, timersButton, guidelinesButton, beginButton]
         configureVariableViews(on: screenHeight, titleLabel: titleLabel, instructionLabel: instructionLabel, buttons: buttons, creditsButton: creditsButton)
@@ -192,6 +251,24 @@ class MenuViewController: UIViewController {
         
         view.addSubview(stackView)
         stackView.anchor(top: instructionLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewHeight)
+    }
+    
+    func triggerExplanationPopup() {
+        view.addSubview(popUpView)
+        popUpView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0)
+        
+        popUpView.addSubview(popupViewTopLabel)
+        popupViewTopLabel.anchor(top: popUpView.topAnchor, left: popUpView.leftAnchor, bottom: nil, right: popUpView.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
+        
+        popUpView.addSubview(explanationLabel)
+        explanationLabel.anchor(top: popupViewTopLabel.bottomAnchor, left: popUpView.leftAnchor, bottom: nil, right: popUpView.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
+        
+        popUpView.addSubview(dismissPopupViewButton)
+        dismissPopupViewButton.anchor(top: nil, left: popUpView.leftAnchor, bottom: popUpView.bottomAnchor, right: popUpView.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: 0)
+        
+        UIView.animate(withDuration: 0.5) {
+            self.popUpView.alpha = 1
+        }
     }
     
     // MARK: Button Functions
@@ -225,7 +302,17 @@ class MenuViewController: UIViewController {
         vibrate()
     }
     
-    @objc func CreditsButtonTapped() {
+    @objc func explanationButtonTapped() {
+        triggerExplanationPopup()
+    }
+    
+    @objc func dismissButtonTapped() {
+        UIView.animate(withDuration: 0.5) {
+            self.popUpView.alpha = 0
+        }
+    }
+    
+    @objc func creditsButtonTapped() {
         let vc = self.storyboard?.instantiateViewController(identifier: "CreditsViewController") as! CreditsViewController
         self.navigationController?.pushViewController(vc, animated: true)
         vibrate()

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -72,7 +72,6 @@
 				5892B0429D606EAB23B0775C /* Pods-MobProgramming.debug.xcconfig */,
 				23137258151F4AACF654A4E1 /* Pods-MobProgramming.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -107,18 +106,12 @@
 			children = (
 				D95DFFE324088EA800B16079 /* AppDelegate.swift */,
 				D95DFFE524088EA800B16079 /* SceneDelegate.swift */,
-				D95DFFE724088EA800B16079 /* MenuViewController.swift */,
-				D970A42124121D0C00E272F2 /* TimersViewController.swift */,
-				D970A4172408BE2100E272F2 /* RulesViewController.swift */,
 				D95DFFE924088EA800B16079 /* Main.storyboard */,
-				D9AD4778241ADC06000C50D9 /* MainPlayViewController.swift */,
-				D9AD4776241ADBA7000C50D9 /* CreditsViewController.swift */,
-				D970A41F24121C9800E272F2 /* GuidelinesViewController.swift */,
-				D970A41B2410CE2200E272F2 /* MembersViewController.swift */,
 				D970A41D2411C5D700E272F2 /* MemberCell.swift */,
-				D95DFFFD2408B4E900B16079 /* SupportingFiles */,
 				D95DFFF124088EAB00B16079 /* Info.plist */,
 				D970A4192408FB5400E272F2 /* Anton.ttf */,
+				D9CF35DD259AB2EE00B77138 /* Controllers */,
+				D95DFFFD2408B4E900B16079 /* SupportingFiles */,
 			);
 			path = MobProgramming;
 			sourceTree = "<group>";
@@ -134,6 +127,20 @@
 				D9268816243594CA008B3374 /* timesUp.wav */,
 			);
 			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		D9CF35DD259AB2EE00B77138 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D95DFFE724088EA800B16079 /* MenuViewController.swift */,
+				D970A42124121D0C00E272F2 /* TimersViewController.swift */,
+				D970A4172408BE2100E272F2 /* RulesViewController.swift */,
+				D9AD4778241ADC06000C50D9 /* MainPlayViewController.swift */,
+				D9AD4776241ADBA7000C50D9 /* CreditsViewController.swift */,
+				D970A41F24121C9800E272F2 /* GuidelinesViewController.swift */,
+				D970A41B2410CE2200E272F2 /* MembersViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,7 +172,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1120;
-				LastUpgradeCheck = 1120;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = HaroldDavidson;
 				TargetAttributes = {
 					D95DFFDF24088EA800B16079 = {
@@ -317,6 +324,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -377,6 +385,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

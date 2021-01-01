@@ -12,11 +12,12 @@ import GoogleMobileAds
 
 class MainPlayViewController: UIViewController, GADInterstitialDelegate {
     
+    // MARK:- Local Variables
     var audioPlayer: AVAudioPlayer?
     let pathToSound = Bundle.main.path(forResource: "timesUp", ofType: "wav")!
     var interstitial: GADInterstitial!
     
-    // MARK: Creating UI components
+    // MARK:- Creating UI components
     let driverImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "driver")
@@ -108,6 +109,7 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         let view = UIView()
         view.backgroundColor = .black
         view.layer.cornerRadius = 5
+        view.alpha = 0
         return view
     }()
     
@@ -170,6 +172,7 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         let view = UIView()
         view.backgroundColor = .black
         view.layer.cornerRadius = 5
+        view.alpha = 0
         return view
     }()
     
@@ -229,39 +232,22 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         interstitial = GADInterstitial(adUnitID: adUnitID)
         let request = GADRequest()
         interstitial.load(request)
-        
-        
-        
-        
-        
-        
-        
-        // WHEN LEAVING AND COMING BACK TO THE VC, THE BREAK TIME IS COUNTING MULTIPLES
-        
-        
-        
-        
-        
-        
+
         // checking if on break
         if (breakTime) {
-           triggerBreakPopup()
+            breakTimerIsRunning = true
+            triggerBreakPopup(with: currentBreakLength)
+            breakTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(MainPlayViewController.updateBreakTimer)), userInfo: nil, repeats: true)
+            
             calculateDisplayTime(time: currentBreakLength, minLabel: breakMinutesLabel, secLabel: breakSecondsLabel)
         } else {
             print(breakTime)
         }
-        
-        
-        print(memberIndex)
-        
-        
-        
-        
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        breakTimer.invalidate()
         timer.invalidate()
     }
     
@@ -348,7 +334,7 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         view.addSubview(popUpView)
         popUpView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: 0)
         
-        view.addSubview(roundOverLabel)
+        popUpView.addSubview(roundOverLabel)
         roundOverLabel.anchor(top: popUpView.topAnchor, left: popUpView.leftAnchor, bottom: nil, right: popUpView.rightAnchor, paddingTop: 5, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
         
         var popupStackView = UIStackView()
@@ -364,18 +350,18 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         
         popUpView.addSubview(nextRoundButton)
         nextRoundButton.anchor(top: nil, left: popUpView.leftAnchor, bottom: popUpView.bottomAnchor, right: popUpView.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: stackViewButtonHeight)
+        
+        UIView.animate(withDuration: 0.5) {
+            self.popUpView.alpha = 1
+        }
     }
- 
+
     // MARK:- Triggering the Break Time View
     var breakTimeStackView = UIStackView()
-    func triggerBreakPopup() {
+    func triggerBreakPopup(with time: Int) {
         let breakTimePopupViewWidth = self.breakTimepopUpView.frame.size.width
-        currentBreakLength = breakLength * 60
-//        breakTimerIsRunning = true
-//        breakTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(MainPlayViewController.updateBreakTimer)), userInfo: nil, repeats: true)
-        
-//
-        calculateDisplayTime(time: currentBreakLength, minLabel: breakMinutesLabel, secLabel: breakSecondsLabel)
+        breakTimerIsRunning = true
+        calculateDisplayTime(time: time, minLabel: breakMinutesLabel, secLabel: breakSecondsLabel)
         
         view.addSubview(breakTimepopUpView)
         breakTimepopUpView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: 0)
@@ -395,18 +381,22 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         
         breakTimepopUpView.addSubview(endBreakButton)
         endBreakButton.anchor(top: nil, left: breakTimepopUpView.leftAnchor, bottom: breakTimepopUpView.bottomAnchor, right: breakTimepopUpView.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: stackViewButtonHeight)
+        
+        UIView.animate(withDuration: 0.5) {
+            self.breakTimepopUpView.alpha = 1
+        }
     }
     
     func triggerPopup() {
         if(breakTime) {
-            triggerBreakPopup()
+            triggerBreakPopup(with: currentBreakLength)
             runBreakTimer()
 //            breakTime = false
         } else {
             triggerNextRoundPopup()
         }
     }
-    
+
     // MARK: Setting Display Time
     func calculateDisplayTime(time: Int, minLabel: UILabel, secLabel: UILabel) {
         let minutes: Int = time / 60
@@ -533,10 +523,13 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
     // MARK: Button for Dismissing Pop Up
     @objc func nextRoundButtonTapped() {
         vibrate()
-        popUpView.removeFromSuperview()
+        //popUpView.removeFromSuperview()
         currentRoundLength = roundLength * 5
         calculateDisplayTime(time: currentRoundLength, minLabel: minutesLabel, secLabel: secondsLabel)
         startStopButton.setTitleColor(buttonTitleColor, for: .normal)
+        UIView.animate(withDuration: 0.5) {
+            self.popUpView.alpha = 0
+        }
     }
     
     @objc func endBreakButtonTapped() {
@@ -548,6 +541,10 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         currentRoundLength = roundLength * 5
         startStopButton.setTitleColor(buttonTitleColor, for: .normal)
         calculateDisplayTime(time: currentRoundLength, minLabel: minutesLabel, secLabel: secondsLabel)
+        
+        UIView.animate(withDuration: 0.5) {
+            self.breakTimepopUpView.alpha = 0
+        }
         
         if (interstitial.isReady) {
             interstitial.present(fromRootViewController: self)

@@ -3,4 +3,146 @@
    uuid = "EE5FCE38-5302-43E8-82B7-4D88836C5A36"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7B4BCB34-66F0-4000-9E07-2FAE0CDBF906"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MobProgramming/MainPlayViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "250"
+            endingLineNumber = "250"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7E39332A-2D6D-46ED-873E-1F6C81FA303E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MobProgramming/Controllers/MainPlayViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "360"
+            endingLineNumber = "360"
+            landmarkName = "MainPlayViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "7E39332A-2D6D-46ED-873E-1F6C81FA303E - dff476c6c4fe4c93"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Codester.MainPlayViewController.breakTimeStackView.getter : __C.UIStackView"
+                  moduleName = "Codester"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/HaroldDavidson/Desktop/Codester/MobProgramming/Controllers/MainPlayViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "382"
+                  endingLineNumber = "382"
+                  offsetFromSymbolStart = "126">
+               </Location>
+               <Location
+                  uuid = "7E39332A-2D6D-46ED-873E-1F6C81FA303E - 8d848690cd7df89f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Codester.MainPlayViewController.breakTimeStackView.setter : __C.UIStackView"
+                  moduleName = "Codester"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/HaroldDavidson/Desktop/Codester/MobProgramming/Controllers/MainPlayViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "382"
+                  endingLineNumber = "382"
+                  offsetFromSymbolStart = "164">
+               </Location>
+               <Location
+                  uuid = "7E39332A-2D6D-46ED-873E-1F6C81FA303E - 5642a7f48003ee48"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Codester.MainPlayViewController.breakTimeStackView.modify : __C.UIStackView"
+                  moduleName = "Codester"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/HaroldDavidson/Desktop/Codester/MobProgramming/Controllers/MainPlayViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "18">
+               </Location>
+               <Location
+                  uuid = "7E39332A-2D6D-46ED-873E-1F6C81FA303E - b9650af4fc1aa865"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Codester.MainPlayViewController.breakTimeStackView.modify : __C.UIStackView with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "Codester"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/HaroldDavidson/Desktop/Codester/MobProgramming/Controllers/MainPlayViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "382"
+                  endingLineNumber = "382"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  uuid = "7E39332A-2D6D-46ED-873E-1F6C81FA303E - 9e4bc59ccabb175b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Codester.MainPlayViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; Codester.MainPlayViewController"
+                  moduleName = "Codester"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/HaroldDavidson/Desktop/Codester/MobProgramming/Controllers/MainPlayViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "382"
+                  endingLineNumber = "382"
+                  offsetFromSymbolStart = "2770">
+               </Location>
+               <Location
+                  uuid = "7E39332A-2D6D-46ED-873E-1F6C81FA303E - aa528ce0c6bdc55c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Codester.MainPlayViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;Codester.MainPlayViewController&gt;"
+                  moduleName = "Codester"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/HaroldDavidson/Desktop/Codester/MobProgramming/Controllers/MainPlayViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "382"
+                  endingLineNumber = "382"
+                  offsetFromSymbolStart = "2705">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "42F330B8-D36E-4AAB-9FDE-3421E30BB694"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MobProgramming/Controllers/MainPlayViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "237"
+            endingLineNumber = "237"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

@@ -47,12 +47,17 @@ func setGray(button: UIButton) {
 
 // MARK: Screen Sizes - h x w
 /*
+ 
+ https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Displays/Displays.html
+ 
  iPhones
- 11 Pro, Xs, X                    =       812 x 375
+ 12 Pro Max                       =       926 x 428
+ 12, 12 Pro                       =       844 x 390
+ 11 Pro, Xs, X, 12m               =       812 x 375
  11 Pro Max, 11, Xs Max, XR       =       896 x 414
  8+, 7+                           =       736 x 414
- 8, 7, 6s, 6s+, 6+, 6             =       667 x 375
- SE                               =       568 x 320
+ 8, 7, 6s, 6s+, 6+, 6, SE2        =       667 x 375
+ SE, Touch 7                      =       568 x 320
 
 
  iPads
