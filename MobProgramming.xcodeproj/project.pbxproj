@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1E331350B3795515D3943F46 /* Pods_MobProgramming.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE0BB454327B8BB1E415B61F /* Pods_MobProgramming.framework */; };
+		D90547E7259FD5F600EEDF5C /* ConfigureVaryingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90547E6259FD5F600EEDF5C /* ConfigureVaryingViews.swift */; };
 		D9268817243594CA008B3374 /* timesUp.wav in Resources */ = {isa = PBXBuildFile; fileRef = D9268816243594CA008B3374 /* timesUp.wav */; };
 		D95DFFE424088EA800B16079 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95DFFE324088EA800B16079 /* AppDelegate.swift */; };
 		D95DFFE624088EA800B16079 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95DFFE524088EA800B16079 /* SceneDelegate.swift */; };
@@ -32,6 +33,7 @@
 		23137258151F4AACF654A4E1 /* Pods-MobProgramming.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobProgramming.release.xcconfig"; path = "Target Support Files/Pods-MobProgramming/Pods-MobProgramming.release.xcconfig"; sourceTree = "<group>"; };
 		5892B0429D606EAB23B0775C /* Pods-MobProgramming.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobProgramming.debug.xcconfig"; path = "Target Support Files/Pods-MobProgramming/Pods-MobProgramming.debug.xcconfig"; sourceTree = "<group>"; };
 		BE0BB454327B8BB1E415B61F /* Pods_MobProgramming.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MobProgramming.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D90547E6259FD5F600EEDF5C /* ConfigureVaryingViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureVaryingViews.swift; sourceTree = "<group>"; };
 		D9268816243594CA008B3374 /* timesUp.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = timesUp.wav; sourceTree = "<group>"; };
 		D95DFFE024088EA800B16079 /* Codester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Codester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D95DFFE324088EA800B16079 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				D95DFFF92408AFC300B16079 /* Mobsters.ttf */,
 				D970A4152408B79800E272F2 /* Globals.swift */,
 				D9268816243594CA008B3374 /* timesUp.wav */,
+				D90547E6259FD5F600EEDF5C /* ConfigureVaryingViews.swift */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 				D95DFFE624088EA800B16079 /* SceneDelegate.swift in Sources */,
 				D970A41E2411C5D700E272F2 /* MemberCell.swift in Sources */,
 				D970A41C2410CE2200E272F2 /* MembersViewController.swift in Sources */,
+				D90547E7259FD5F600EEDF5C /* ConfigureVaryingViews.swift in Sources */,
 				D970A4162408B79800E272F2 /* Globals.swift in Sources */,
 				D970A4182408BE2100E272F2 /* RulesViewController.swift in Sources */,
 				D9AD4779241ADC06000C50D9 /* MainPlayViewController.swift in Sources */,

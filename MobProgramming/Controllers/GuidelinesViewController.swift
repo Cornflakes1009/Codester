@@ -17,6 +17,7 @@ class GuidelinesViewController: UIViewController {
         let tv = UITextView()
         tv.layer.cornerRadius = 5
         tv.text = guidelines
+        tv.font = rulesFont
         tv.textColor = .black
         tv.backgroundColor = .white
         tv.isScrollEnabled = true

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MessageUI
 
-class MenuViewController: UIViewController {
+class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate {
 
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -94,7 +95,6 @@ class MenuViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("WHAT IS CODESTER?", for: .normal)
         button.tintColor = .white
-        button.titleLabel?.font = UIFont(name: "Anton", size: 25)
         button.addTarget(self, action: #selector(explanationButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -105,6 +105,15 @@ class MenuViewController: UIViewController {
         button.tintColor = .white
         button.titleLabel?.font = UIFont(name: "Anton", size: 25)
         button.addTarget(self, action: #selector(creditsButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    let emailButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Email", for: .normal)
+        button.tintColor = .white
+        button.titleLabel?.font = UIFont(name: "Anton", size: 25)
+        button.addTarget(self, action: #selector(emailButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -158,6 +167,9 @@ class MenuViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
 
+        AppUtility.lockOrientation(.portrait)
+        AppUtility.lockOrientation(UIInterfaceOrientationMask.portrait, andRotateTo: UIInterfaceOrientation.portrait)
+
         // Setting buttons to be green/gray depending on what the user needs to do
         if !rulesClicked {
             setGreen(button: rulesButton)
@@ -187,7 +199,7 @@ class MenuViewController: UIViewController {
             setGray(button: membersButton)
             setGray(button: timersButton)
             setGray(button: guidelinesButton)
-            instructionLabel.text = "Press begin and enjoy mobbing."
+            instructionLabel.text = "Press Mob! and enjoy mobbing."
             setGreen(button: beginButton)
             beginButton.isEnabled = true
         }
@@ -202,11 +214,24 @@ class MenuViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         if UIDevice.current.orientation.isLandscape {
+            
+            
+            
+            
+            
+            
+            
+            
+            
             stackView.removeAllConstraints()
             setupStackView()
+            explanationButton.removeAllConstraints()
+            setupExplanationButton()
         } else {
             stackView.removeAllConstraints()
             setupStackView()
+            explanationButton.removeAllConstraints()
+            setupExplanationButton()
         }
     }
     
@@ -217,6 +242,9 @@ class MenuViewController: UIViewController {
         let screenHeight = UIScreen.main.bounds.size.height
         let fifthOfScreenHeight = screenHeight / 5
         
+        print("Screen height -----  \(screenHeight)")
+        print("Screen width -----  \(UIScreen.main.bounds.size.width)")
+        
         view.addSubview(titleLabel)
 
         titleLabel.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: fifthOfScreenHeight)
@@ -226,19 +254,20 @@ class MenuViewController: UIViewController {
         
         setupStackView()
         
-        view.addSubview(creditsButton)
-        creditsButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: -10, paddingRight: 0, width: 0, height: 0)
-        creditsButton.center = self.view.center
+        setupExplanationButton()
         
-        view.addSubview(explanationButton)
-        explanationButton.anchor(top: stackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
+        view.addSubview(creditsButton)
+        creditsButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: -10, paddingRight: 0, width: 0, height: 0)
+        
+        view.addSubview(emailButton)
+        emailButton.anchor(top: nil, left: nil, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: -10, paddingRight: 20, width: 0, height: 0)
         
         let buttons = [rulesButton, membersButton, timersButton, guidelinesButton, beginButton]
-        configureVariableViews(on: screenHeight, titleLabel: titleLabel, instructionLabel: instructionLabel, buttons: buttons, creditsButton: creditsButton)
+        configureVariableViews(on: screenHeight, titleLabel: titleLabel, instructionLabel: instructionLabel, buttons: buttons, creditsButton: creditsButton, emailButton: emailButton, explanationButton: explanationButton)
     }
     
+    // MARK:- Setting Up the StackView
     var stackView = UIStackView()
-    // MARK: Setting Up the StackView
     func setupStackView() {
         stackView = UIStackView(arrangedSubviews: [rulesButton, membersButton, timersButton, guidelinesButton, beginButton])
         stackView.distribution = .fillEqually
@@ -253,6 +282,12 @@ class MenuViewController: UIViewController {
         stackView.anchor(top: instructionLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewHeight)
     }
     
+    // MARK:- Setting Up Explanation Button
+    func setupExplanationButton() {
+        view.addSubview(explanationButton)
+        explanationButton.anchor(top: stackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
+    }
+    
     func triggerExplanationPopup() {
         view.addSubview(popUpView)
         popUpView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10, width: 0, height: 0)
@@ -264,14 +299,33 @@ class MenuViewController: UIViewController {
         explanationLabel.anchor(top: popupViewTopLabel.bottomAnchor, left: popUpView.leftAnchor, bottom: nil, right: popUpView.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
         
         popUpView.addSubview(dismissPopupViewButton)
-        dismissPopupViewButton.anchor(top: nil, left: popUpView.leftAnchor, bottom: popUpView.bottomAnchor, right: popUpView.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: 0)
+        dismissPopupViewButton.anchor(top: nil, left: popUpView.leftAnchor, bottom: popUpView.bottomAnchor, right: popUpView.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: -20, paddingRight: 20, width: 0, height: stackViewButtonHeight)
         
         UIView.animate(withDuration: 0.5) {
             self.popUpView.alpha = 1
         }
     }
     
-    // MARK: Button Functions
+    // MARK:- Email Functions
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
+    }
+    
+    func sendEmail() {
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients(["spelldevelopment@gmail.com"])
+            mail.setSubject("Codester")
+            mail.setMessageBody("<p>Hello, Spell Development. I have a question, issue, or general inquiry.</p>", isHTML: true)
+
+            present(mail, animated: true)
+        } else {
+            // show failure alert
+        }
+    }
+    
+    // MARK:- Button Functions
     @objc func rulesTapped() {
         let vc = self.storyboard?.instantiateViewController(identifier: "RulesViewController") as! RulesViewController
         self.navigationController?.pushViewController(vc, animated: true)
@@ -316,5 +370,9 @@ class MenuViewController: UIViewController {
         let vc = self.storyboard?.instantiateViewController(identifier: "CreditsViewController") as! CreditsViewController
         self.navigationController?.pushViewController(vc, animated: true)
         vibrate()
+    }
+    
+    @objc func emailButtonTapped() {
+        sendEmail()
     }
 }

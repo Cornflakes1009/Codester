@@ -16,6 +16,7 @@ class MembersViewController: UIViewController {
         tf.textColor = .white
         tf.backgroundColor = UIColor.rgb(red: 112, green: 112, blue: 112, alpha: 1)
         tf.layer.cornerRadius = 5
+        tf.font = rulesFont
         tf.addDoneButtonOnKeyboard()
         return tf
     }()
@@ -125,6 +126,7 @@ extension MembersViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemberCell") as! MemberCell
         cell.set(label: members[indexPath.row])
         cell.backgroundColor = .white
+        cell.memberLabel.font = rulesFont
         return cell
     }
     

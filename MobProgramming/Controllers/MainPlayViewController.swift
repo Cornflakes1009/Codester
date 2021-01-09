@@ -16,8 +16,17 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
     var audioPlayer: AVAudioPlayer?
     let pathToSound = Bundle.main.path(forResource: "timesUp", ofType: "wav")!
     var interstitial: GADInterstitial!
+    var audioSymbol = ""
     
     // MARK:- Creating UI components
+    let audioButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.tintColor = whiteColor
+        button.setTitleColor(whiteColor, for: .normal)
+        button.addTarget(self, action: #selector(audioTapped), for: .touchUpInside)
+        return button
+    }()
+    
     let driverImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "driver")
@@ -249,10 +258,12 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         super.viewWillDisappear(animated)
         breakTimer.invalidate()
         timer.invalidate()
+        AppUtility.lockOrientation(.portrait)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        AppUtility.lockOrientation(.all)
     }
     
     // MARK:- AdMob Function
@@ -268,6 +279,19 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         self.view.backgroundColor = UIColor(patternImage:  backgroundImage)
         navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        
+        if audioIsOn {
+            audioSymbol = "speaker.2"
+        } else {
+            audioSymbol = "speaker.slash"
+        }
+        
+        let audioButtonImageConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .light, scale: .large)
+        let audioImage = UIImage(systemName: audioSymbol, withConfiguration: audioButtonImageConfig)
+        
+        audioButton.setImage(audioImage, for: .normal)
+        view.addSubview(audioButton)
+        audioButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
         setupStackViews()
         
@@ -301,7 +325,7 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         imageStackView.spacing = playerStackSpacing
         
         view.addSubview(imageStackView)
-        imageStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 30, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewHeight)
+        imageStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 55, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: stackViewHeight)
         
         driverView.addSubview(driverImage)
         driverImage.anchor(top: driverView.topAnchor, left: driverView.leftAnchor, bottom: driverView.bottomAnchor, right: driverView.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: -10, paddingRight: 10, width: 0, height: 0)
@@ -322,8 +346,10 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         timeStackView.axis = .horizontal
         timeStackView.spacing = 1
         
+        // TODO: Setup Time Stack View Height
+        let timeStackViewHeight = screenHeight / 4
         view.addSubview(timeStackView)
-        timeStackView.anchor(top: nameStackView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: screenWidth * 0.5, height: 100)
+        timeStackView.anchor(top: nameStackView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: screenWidth * 0.5, height: timeStackViewHeight)
         timeStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
@@ -388,16 +414,16 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
     }
     
     func triggerPopup() {
+        currentRoundLength = roundLength * 60
         if(breakTime) {
             triggerBreakPopup(with: currentBreakLength)
             runBreakTimer()
-//            breakTime = false
         } else {
             triggerNextRoundPopup()
         }
     }
 
-    // MARK: Setting Display Time
+    // MARK:- Setting Display Time
     func calculateDisplayTime(time: Int, minLabel: UILabel, secLabel: UILabel) {
         let minutes: Int = time / 60
         let seconds: Int = time % 60
@@ -436,7 +462,7 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         breakTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(MainPlayViewController.updateBreakTimer)), userInfo: nil, repeats: true)
     }
     
-    // MARK: Updating Driver, Navigator, and Main Timer Labels
+    // MARK:- Updating Driver, Navigator, and Main Timer Labels
     func updateLabels() {
         
         if(memberIndex + 1 == members.count) {
@@ -461,16 +487,19 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         }
     }
     
+    // MARK:- Playing Sounds
     func playSound() {
         // Play sound
         let url = URL(fileURLWithPath: pathToSound)
         do {
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-//            audioPlayer?.play()
+            if audioIsOn {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer?.play()
+            }
         } catch {print(error)}
     }
     
-    // MARK: Main Timer
+    // MARK:- Main Timer
     var timerIsRunning = false
     var timer = Timer()
     @objc func updateTimer() {
@@ -488,7 +517,7 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         }
     }
     
-    // MARK: Break Timer
+    // MARK:- Break Timer
     var breakTimerIsRunning = false
     var breakTimer = Timer()
     @objc func updateBreakTimer() {
@@ -502,7 +531,7 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         }
     }
     
-    // MARK: Starting and Stopping Timer
+    // MARK:- Starting and Stopping Timer
     @objc func startStopTapped() {
         vibrate()
         if(timerIsRunning == false) {
@@ -520,11 +549,11 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         }
     }
     
-    // MARK: Button for Dismissing Pop Up
+    // MARK:- Button for Dismissing Pop Up
     @objc func nextRoundButtonTapped() {
         vibrate()
         //popUpView.removeFromSuperview()
-        currentRoundLength = roundLength * 5
+        currentRoundLength = roundLength * 60
         calculateDisplayTime(time: currentRoundLength, minLabel: minutesLabel, secLabel: secondsLabel)
         startStopButton.setTitleColor(buttonTitleColor, for: .normal)
         UIView.animate(withDuration: 0.5) {
@@ -538,7 +567,7 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         breakTimerIsRunning = false
         breakTime = false
         breakTimer.invalidate()
-        currentRoundLength = roundLength * 5
+        currentRoundLength = roundLength * 60
         startStopButton.setTitleColor(buttonTitleColor, for: .normal)
         calculateDisplayTime(time: currentRoundLength, minLabel: minutesLabel, secLabel: secondsLabel)
         
@@ -550,5 +579,21 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
             interstitial.present(fromRootViewController: self)
             interstitial = createAd()
         }
+    }
+    
+    @objc func audioTapped() {
+        audioIsOn.toggle()
+        defaults.setValue(audioIsOn, forKey: "audioIsOn")
+        
+        if audioIsOn {
+            audioSymbol = "speaker.2"
+        } else {
+            audioSymbol = "speaker.slash"
+        }
+        
+        let audioButtonImageConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .light, scale: .large)
+        let audioImage = UIImage(systemName: audioSymbol, withConfiguration: audioButtonImageConfig)
+        
+        audioButton.setImage(audioImage, for: .normal)
     }
 }

@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-// MARK: RGB
+// MARK:- RGB
 // Simplifying UIColor.rgb. Removes the need to /255 and alpha value.
 extension UIColor {
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> UIColor {
@@ -17,7 +17,7 @@ extension UIColor {
     }
 }
 
-// MARK: Add Constraints
+// MARK:- Add Constraints
 // Extension for simplifying the adding of constraints
 extension UIView {
     func anchor(top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?, paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat) {
@@ -50,7 +50,7 @@ extension UIView {
     }
 }
 
-// MARK: Remove Constraints
+// MARK:- Remove Constraints
 // Extension for removing all constraints of the specified view
 extension UIView {
 
@@ -77,7 +77,7 @@ extension UIView {
     }
 }
 
-// MARK: Nav Bar Height
+// MARK:- Nav Bar Height
 // Extension for getting the navigation bar height
 extension UIViewController {
 
@@ -91,7 +91,7 @@ extension UIViewController {
     }
 }
 
-// MARK: Done Button
+// MARK:- Done Button
 // Add Done Button
 extension UITextField {
     
@@ -161,7 +161,7 @@ extension UITextView {
     }
 }
 
-// MARK: Make Vibration
+// MARK:- Make Vibration
 /** Use UIDevice.vibrate() to trigger vibration
  */
 extension UIDevice {
@@ -170,7 +170,7 @@ extension UIDevice {
     }
 }
 
-// MARK: Adding a Light Vibration
+// MARK:- Adding a Light Vibration
 /** Light Haptic Feeback for button taps
  # For other vibrations, see: #
     https://www.hackingwithswift.com/example-code/uikit/how-to-generate-haptic-feedback-with-uifeedbackgenerator
@@ -180,7 +180,7 @@ func vibrate() {
     generator.impactOccurred()
 }
 
-// MARK: Trim String
+// MARK:- Trim String
 /** Usage: let someString = "Hello   ".trim() */
 extension String
 {
@@ -188,4 +188,25 @@ extension String
    {
     return self.trimmingCharacters(in: NSCharacterSet.whitespaces)
    }
+}
+
+// MARK:- Restricting Device Orientation
+// https://stackoverflow.com/questions/28938660/how-to-lock-orientation-of-one-view-controller-to-portrait-mode-only-in-swift
+struct AppUtility {
+    static func lockOrientation(_ orientation: UIInterfaceOrientationMask) {
+    
+        if let delegate = UIApplication.shared.delegate as? AppDelegate {
+            delegate.orientationLock = orientation
+        }
+    }
+
+    /// OPTIONAL Added method to adjust lock and rotate to the desired orientation
+    static func lockOrientation(_ orientation: UIInterfaceOrientationMask, andRotateTo rotateOrientation:UIInterfaceOrientation) {
+   
+        self.lockOrientation(orientation)
+    
+        UIDevice.current.setValue(rotateOrientation.rawValue, forKey: "orientation")
+        UINavigationController.attemptRotationToDeviceOrientation()
+    }
+
 }
