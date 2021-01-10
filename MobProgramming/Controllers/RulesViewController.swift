@@ -21,12 +21,19 @@ class RulesViewController: UIViewController {
         
         Rules:
         1. Be respectful to each other and their property. No greasy pizza fingers!
+
         2. The navigator is the only person allowed to direct the driver.
+
         3. The navigator should discuss with the other group members on the next steps, but only the navigator is allowed to direct the driver.
+
         4. The navigator has the final say in all matters related to the project during the navigator’s turn.
-        5. Once the timer runs out, pass the role of navigator and driver to the next group members specified.
+
+        5. Once the timer runs out, pass the role of navigator and driver to the next group members specified by the app.
+
         6. The navigator discusses with the entire group to determine what they’ll build and what the requirements of “done” are. The navigator will instruct the driver to write this down.
+
         7. Follow the app to determine turns and breaks.
+
         8. Mob programming is over when the app is complete or the session time runs out. Ex. 6pm-8pm.
         """
         tv.font = rulesFont

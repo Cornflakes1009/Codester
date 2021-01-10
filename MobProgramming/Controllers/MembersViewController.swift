@@ -18,6 +18,7 @@ class MembersViewController: UIViewController {
         tf.layer.cornerRadius = 5
         tf.font = rulesFont
         tf.addDoneButtonOnKeyboard()
+        tf.setLeftPaddingPoints(20)
         return tf
     }()
     

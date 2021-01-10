@@ -15,12 +15,19 @@ class CreditsViewController: UIViewController {
         tv.text = """
         I would like to give a special thanks to my girlfriend, Rechie who created the app icon and to the PDX CocoaHeads group for giving me the idea to make this app. I hope everyone using this finds it helpful and enjoyable. Happy coding.
         """
+        // changing line height
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 20
+        let attributes = [NSAttributedString.Key.paragraphStyle : style]
+        tv.attributedText = NSAttributedString(string: tv.text, attributes: attributes)
+        
         tv.font = rulesFont
         tv.textColor = .white
         tv.backgroundColor = .clear
         tv.isEditable = false
         tv.isSelectable = false
         tv.isScrollEnabled = true
+        
         return tv
     }()
     

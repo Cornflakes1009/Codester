@@ -139,10 +139,17 @@ class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate 
     let explanationLabel: UILabel = {
         let label = UILabel()
         label.text = "Codester is a tool to facilitate team work amongst developers. A group of developers work together to complete a single project and each person takes turns being the leader, collaborator, and the follower."
+        label.numberOfLines = 0
+        // changing line height
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 20
+        let attributes = [NSAttributedString.Key.paragraphStyle : style]
+        label.attributedText = NSAttributedString(string: label.text ?? "", attributes: attributes)
+        
         label.font = rulesFont
         label.textAlignment = .center
         label.textColor = .white
-        label.numberOfLines = 0
+        
         return label
     }()
     
@@ -167,9 +174,14 @@ class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate 
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
 
-        AppUtility.lockOrientation(.portrait)
         AppUtility.lockOrientation(UIInterfaceOrientationMask.portrait, andRotateTo: UIInterfaceOrientation.portrait)
 
+        var screenHeight: CGFloat = UIScreen.main.bounds.size.height
+        let screenWidth = UIScreen.main.bounds.size.width
+        if screenHeight < screenWidth {
+            screenHeight = screenWidth
+        }
+        
         // Setting buttons to be green/gray depending on what the user needs to do
         if !rulesClicked {
             setGreen(button: rulesButton)
@@ -199,10 +211,15 @@ class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate 
             setGray(button: membersButton)
             setGray(button: timersButton)
             setGray(button: guidelinesButton)
-            instructionLabel.text = "Press Mob! and enjoy mobbing."
+            instructionLabel.text = "Press Mob! and enjoy."
             setGreen(button: beginButton)
             beginButton.isEnabled = true
         }
+        
+        let buttons = [rulesButton, membersButton, timersButton, guidelinesButton, beginButton]
+        configureVariableViews(on: screenHeight, titleLabel: titleLabel, instructionLabel: instructionLabel, buttons: buttons, creditsButton: creditsButton, emailButton: emailButton, explanationButton: explanationButton)
+        
+        explanationLabel.font = rulesFont
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -211,35 +228,30 @@ class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate 
     }
     
     // Detecting if screen rotates and redrawing stack view
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        if UIDevice.current.orientation.isLandscape {
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            stackView.removeAllConstraints()
-            setupStackView()
-            explanationButton.removeAllConstraints()
-            setupExplanationButton()
-        } else {
-            stackView.removeAllConstraints()
-            setupStackView()
-            explanationButton.removeAllConstraints()
-            setupExplanationButton()
-        }
-    }
+//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//        super.viewWillTransition(to: size, with: coordinator)
+//        if UIDevice.current.orientation.isLandscape {
+//            stackView.removeAllConstraints()
+//            setupStackView()
+//            explanationButton.removeAllConstraints()
+//            setupExplanationButton()
+//        } else {
+//            stackView.removeAllConstraints()
+//            setupStackView()
+//            explanationButton.removeAllConstraints()
+//            setupExplanationButton()
+//        }
+//    }
     
     // MARK:- Setting Up the Views
     func setUpViews() {
         view.backgroundColor = .black
         self.view.backgroundColor = UIColor(patternImage:  backgroundImage)
-        let screenHeight = UIScreen.main.bounds.size.height
+        var screenHeight: CGFloat = UIScreen.main.bounds.size.height
+        let screenWidth = UIScreen.main.bounds.size.width
+        if screenHeight < screenWidth {
+            screenHeight = screenWidth
+        }
         let fifthOfScreenHeight = screenHeight / 5
         
         print("Screen height -----  \(screenHeight)")
@@ -274,7 +286,12 @@ class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate 
         stackView.axis = .vertical
         stackView.spacing = 10
         
-        let screenHeight = UIScreen.main.bounds.size.height
+        var screenHeight: CGFloat = UIScreen.main.bounds.size.height
+        let screenWidth = UIScreen.main.bounds.size.width
+        if screenHeight < screenWidth {
+            screenHeight = screenWidth
+        }
+        
         let stackViewHeight = CGFloat(screenHeight / 2)
         stackViewButtonHeight = CGFloat((stackViewHeight - 40) / 5)
         
@@ -357,10 +374,12 @@ class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate 
     }
     
     @objc func explanationButtonTapped() {
+        vibrate()
         triggerExplanationPopup()
     }
     
     @objc func dismissButtonTapped() {
+        vibrate()
         UIView.animate(withDuration: 0.5) {
             self.popUpView.alpha = 0
         }

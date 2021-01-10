@@ -28,9 +28,11 @@ import UIKit
  Air 4                            =       1180 x 820
  10.5" Pro, Air 3                 =       1112 x 834
  9.7" Pro, Air 2, Mini 5          =       1024 x 768
+ 11" Pro                         =       1194 x 835
 */
 
 enum Devices: CGFloat {
+    case twelveAndProHeight         =     844
     case elevenAndProMaxHeight      =     896
     case elevenProHeight            =     812
     case eightPlusHeight            =     736
@@ -40,6 +42,7 @@ enum Devices: CGFloat {
     case airThreeHeight             =     1112
     case airTwoHeight               =     1024
     case airFourHeight              =     1180
+    case proElevenInchHeight        =     1194
 }
 
 /*
@@ -56,6 +59,17 @@ func configureVariableViews(on screenSize: CGFloat, titleLabel: UILabel, instruc
         creditsButton.titleLabel?.font = UIFont(name: "Anton", size: 30)
         emailButton.titleLabel?.font = UIFont(name: "Anton", size: 30)
         explanationButton.titleLabel?.font = UIFont(name: "Anton", size: 30)
+        rulesFont = UIFont.systemFont(ofSize: 18)
+        
+    case Devices.twelveAndProHeight.rawValue:
+        buttonFont = UIFont(name: "Anton", size: 50)
+        titleLabelFont = UIFont(name: "Mobsters", size: 100)
+        titleLabel.font = titleLabelFont
+        instructionLabelFont = UIFont(name: "Anton", size: 20)
+        instructionLabel.font = instructionLabelFont
+        creditsButton.titleLabel?.font = UIFont(name: "Anton", size: 25)
+        emailButton.titleLabel?.font = UIFont(name: "Anton", size: 25)
+        explanationButton.titleLabel?.font = UIFont(name: "Anton", size: 25)
         rulesFont = UIFont.systemFont(ofSize: 18)
         
     case Devices.elevenProHeight.rawValue:
@@ -103,9 +117,9 @@ func configureVariableViews(on screenSize: CGFloat, titleLabel: UILabel, instruc
         rulesFont = UIFont.systemFont(ofSize: 18)
 
     case Devices.bigiPadProHeight.rawValue:
-        playerLabelFont = UIFont(name: "Anton", size: 100)
+        playerLabelFont = UIFont(name: "Anton", size: 90)
         timerLabelFont = UIFont(name: "Anton", size: 150)
-        buttonFont = UIFont(name: "Anton", size: 100)
+        buttonFont = UIFont(name: "Anton", size: 90)
         titleLabelFont = UIFont(name: "Mobsters", size: 150)
         titleLabel.font = titleLabelFont
         instructionLabelFont = UIFont(name: "Anton", size: 40)
@@ -113,15 +127,27 @@ func configureVariableViews(on screenSize: CGFloat, titleLabel: UILabel, instruc
         creditsButton.titleLabel?.font = UIFont(name: "Anton", size: 40)
         emailButton.titleLabel?.font = UIFont(name: "Anton", size: 40)
         explanationButton.titleLabel?.font = UIFont(name: "Anton", size: 40)
-        rulesFont = UIFont.systemFont(ofSize: 30)
+        rulesFont = UIFont.systemFont(ofSize: 40)
 
     case Devices.airThreeHeight.rawValue:
-        playerLabelFont = UIFont(name: "Anton", size: 80)
-        timerLabelFont = UIFont(name: "Anton", size: 120)
-        buttonFont = UIFont(name: "Anton", size: 100)
-        titleLabelFont = UIFont(name: "Mobsters", size: 200)
+        playerLabelFont = UIFont(name: "Anton", size: 60)
+        timerLabelFont = UIFont(name: "Anton", size: 100)
+        buttonFont = UIFont(name: "Anton", size: 80)
+        titleLabelFont = UIFont(name: "Mobsters", size: 180)
         titleLabel.font = titleLabelFont
-        instructionLabelFont = UIFont(name: "Anton", size: 50)
+        instructionLabelFont = UIFont(name: "Anton", size: 40)
+        instructionLabel.font = instructionLabelFont
+        creditsButton.titleLabel?.font = UIFont(name: "Anton", size: 50)
+        emailButton.titleLabel?.font = UIFont(name: "Anton", size: 50)
+        explanationButton.titleLabel?.font = UIFont(name: "Anton", size: 50)
+    
+    case Devices.proElevenInchHeight.rawValue:
+        playerLabelFont = UIFont(name: "Anton", size: 60)
+        timerLabelFont = UIFont(name: "Anton", size: 100)
+        buttonFont = UIFont(name: "Anton", size: 80)
+        titleLabelFont = UIFont(name: "Mobsters", size: 180)
+        titleLabel.font = titleLabelFont
+        instructionLabelFont = UIFont(name: "Anton", size: 40)
         instructionLabel.font = instructionLabelFont
         creditsButton.titleLabel?.font = UIFont(name: "Anton", size: 50)
         emailButton.titleLabel?.font = UIFont(name: "Anton", size: 50)

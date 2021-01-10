@@ -249,8 +249,6 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
             breakTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(MainPlayViewController.updateBreakTimer)), userInfo: nil, repeats: true)
             
             calculateDisplayTime(time: currentBreakLength, minLabel: breakMinutesLabel, secLabel: breakSecondsLabel)
-        } else {
-            print(breakTime)
         }
     }
     
@@ -263,7 +261,18 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        AppUtility.lockOrientation(.all)
+        
+        // Rotating screen depending if iPad or iPhone
+        let deviceIdiom = UIScreen.main.traitCollection.userInterfaceIdiom
+        switch deviceIdiom {
+        case .phone:
+            print("PHONE")
+            AppUtility.lockOrientation(UIInterfaceOrientationMask.portrait, andRotateTo: UIInterfaceOrientation.portrait)
+        case .pad:
+            AppUtility.lockOrientation(UIInterfaceOrientationMask.landscape, andRotateTo: UIInterfaceOrientation.landscapeRight)
+        default:
+            print("not an iOS device")
+        }
     }
     
     // MARK:- AdMob Function
@@ -338,15 +347,15 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
         nameStackView.axis = .horizontal
         nameStackView.spacing = playerStackSpacing
         
+        let nameStackViewHeight = screenHeight / 15
         view.addSubview(nameStackView)
-        nameStackView.anchor(top: imageStackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 100)
+        nameStackView.anchor(top: imageStackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: nameStackViewHeight)
         
         timeStackView = UIStackView(arrangedSubviews: [minutesLabel, colonLabel, secondsLabel])
         timeStackView.distribution = .fillEqually
         timeStackView.axis = .horizontal
         timeStackView.spacing = 1
         
-        // TODO: Setup Time Stack View Height
         let timeStackViewHeight = screenHeight / 4
         view.addSubview(timeStackView)
         timeStackView.anchor(top: nameStackView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: screenWidth * 0.5, height: timeStackViewHeight)
@@ -582,6 +591,7 @@ class MainPlayViewController: UIViewController, GADInterstitialDelegate {
     }
     
     @objc func audioTapped() {
+        vibrate()
         audioIsOn.toggle()
         defaults.setValue(audioIsOn, forKey: "audioIsOn")
         
